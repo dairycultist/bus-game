@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=9 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
 [ext_resource type="Script" uid="uid://dpytpwwbk7if6" path="res://wheel.gd" id="2_nxogm"]
@@ -13,11 +13,16 @@ uv1_scale = Vector3(10, 10, 10)
 size = Vector2(10, 10)
 orientation = 1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ulcgi"]
-size = Vector3(1, 0.5, 1)
+[sub_resource type="BoxShape3D" id="BoxShape3D_nxogm"]
+size = Vector3(1, 0.5, 0.5)
 
-[sub_resource type="BoxMesh" id="BoxMesh_nxogm"]
-size = Vector3(1, 0.5, 1)
+[sub_resource type="BoxMesh" id="BoxMesh_3253y"]
+size = Vector3(1, 0.5, 0.5)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nxogm"]
+top_radius = 0.2
+bottom_radius = 0.2
+height = 0.2
 
 [node name="Node3D" type="Node3D"]
 
@@ -36,24 +41,50 @@ transform = Transform3D(1, 0, 0, 0, 0.956453, 0.291888, 0, -0.291888, 0.956453, 
 
 [node name="Chassis" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28183, 0)
-linear_damp = 3.0
+linear_damp = 10.0
 angular_damp = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Chassis"]
-shape = SubResource("BoxShape3D_ulcgi")
+shape = SubResource("BoxShape3D_nxogm")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Chassis"]
-mesh = SubResource("BoxMesh_nxogm")
+mesh = SubResource("BoxMesh_3253y")
 
-[node name="Wheel" type="RigidBody3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.950028, 0)
+[node name="Wheel" type="Node3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1.28183, -1)
 script = ExtResource("2_nxogm")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Chassis/Wheel"]
-shape = SubResource("BoxShape3D_ulcgi")
+[node name="Mesh" type="MeshInstance3D" parent="Chassis/Wheel"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_nxogm")
+skeleton = NodePath("")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Chassis/Wheel"]
-mesh = SubResource("BoxMesh_nxogm")
+[node name="Wheel2" type="Node3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.28183, -1)
+script = ExtResource("2_nxogm")
+
+[node name="Mesh" type="MeshInstance3D" parent="Chassis/Wheel2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_nxogm")
+skeleton = NodePath("")
+
+[node name="Wheel3" type="Node3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -1.28183, 1)
+script = ExtResource("2_nxogm")
+
+[node name="Mesh" type="MeshInstance3D" parent="Chassis/Wheel3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_nxogm")
+skeleton = NodePath("")
+
+[node name="Wheel4" type="Node3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, -1.28183, 1)
+script = ExtResource("2_nxogm")
+
+[node name="Mesh" type="MeshInstance3D" parent="Chassis/Wheel4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.2, 0)
+mesh = SubResource("CylinderMesh_nxogm")
+skeleton = NodePath("")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292119, 0, 0, 0)
