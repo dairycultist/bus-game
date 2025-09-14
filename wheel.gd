@@ -1,8 +1,9 @@
 extends Node3D
 
-# the wheel node indicates the positiona at zero compression (aka the lowest point).
+# the wheel node indicates the positions at zero compression (aka the lowest point)
+# it should be the child of a rigidbody representing the car's chassis
 
-# values that work good enough for a 100kg car with 0 linear damp and 5 angular damp
+# default values work good enough for a 100kg car with 0 linear damp and 5 angular damp
 @export var max_compression_distance: float = 1.0
 @export var stiffness: float = 1500.0
 @export var dampening: float = 150.0
@@ -11,9 +12,9 @@ extends Node3D
 
 func _process(delta: float) -> void:
 	
-	var chassis := get_parent_node_3d()
-	var chassis_up := global_transform.basis.y
-	var chassis_forward := -global_transform.basis.z # -z direction is forward
+	var chassis                := get_parent_node_3d()
+	var chassis_up             :=  global_transform.basis.y
+	var chassis_forward        := -global_transform.basis.z # -z direction is forward
 	var chassis_force_position := global_position + chassis_up * max_compression_distance - chassis.global_position
 	
 	# raycast from the point of max_compression_distance down
@@ -27,26 +28,27 @@ func _process(delta: float) -> void:
 	# if the ray hits something before the point of zero compression, it means
 	# the suspension is compressed and we should apply a suspension force to
 	# the chassis
-	var compression_distance := 0.
-	var compression_amount   := 0.
+	var compression_distance := 0.0
 	
 	if (ray_result):
 		
-		compression_distance = max_compression_distance - (max_compression_position - ray_result.position).length()
-		compression_amount = compression_distance / max_compression_distance
+		compression_distance   = max_compression_distance - (max_compression_position - ray_result.position).length()
+		var compression_amount = compression_distance / max_compression_distance
 		
-		# apply spring force
+		# apply spring force based on compression_amount
 		chassis.apply_force(compression_amount * chassis_up * stiffness, chassis_force_position)
 		
-		# apply dampening force opposite to current up-down speed
-		var updown_speed = chassis.linear_velocity.dot(chassis_up)
-		chassis.apply_force(updown_speed * -chassis_up * dampening, chassis_force_position)
+		# apply dampening force opposite to vertical velocity
+		chassis.apply_force(chassis.linear_velocity.dot(chassis_up) * -chassis_up * dampening, chassis_force_position)
+		
+		# input/powering (only when compressed/grounded)
+		if (powered):
+			
+			if (Input.is_action_pressed("ui_up")):
+				chassis.apply_force(chassis_forward * drive_force, chassis_force_position)
+			
+			if (Input.is_action_pressed("ui_down")):
+				chassis.apply_force(-chassis_forward * drive_force, chassis_force_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
-	
-	# input/powering
-	if (powered and compression_amount > 0.02):
-		
-		if (Input.is_action_pressed("ui_up")):
-			chassis.apply_force(chassis_forward * drive_force, chassis_force_position)
