@@ -5,7 +5,7 @@ extends Node3D
 # values that work good enough for a 100kg car with 0 linear damp and 5 angular damp
 @export var max_compression_distance: float = 1.0
 @export var stiffness: float = 1500.0
-@export var dampening: float = 0.1
+@export var dampening: float = 150.0
 @export var powered: bool = true
 @export var drive_force: float = 50.0
 
@@ -40,7 +40,7 @@ func _process(delta: float) -> void:
 		
 		# apply dampening force opposite to current up-down speed
 		var updown_speed = chassis.linear_velocity.dot(chassis_up)
-		chassis.apply_force(dampening * updown_speed * -chassis_up * stiffness, chassis_force_position)
+		chassis.apply_force(updown_speed * -chassis_up * dampening, chassis_force_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2

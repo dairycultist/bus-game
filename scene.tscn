@@ -51,7 +51,7 @@ shape = SubResource("BoxShape3D_nxogm")
 mesh = SubResource("BoxMesh_3253y")
 
 [node name="WheelFront1" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.7, -0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.923608, -0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
 
@@ -61,7 +61,7 @@ mesh = SubResource("CylinderMesh_nxogm")
 skeleton = NodePath("")
 
 [node name="WheelFront2" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.7, -0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.923608, -0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
 
@@ -71,7 +71,7 @@ mesh = SubResource("CylinderMesh_nxogm")
 skeleton = NodePath("")
 
 [node name="WheelBack1" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.7, 0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.923608, 0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
 powered = false
@@ -82,7 +82,7 @@ mesh = SubResource("CylinderMesh_nxogm")
 skeleton = NodePath("")
 
 [node name="WheelBack2" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.7, 0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.923608, 0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
 powered = false
