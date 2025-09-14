@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfspaxgwgkgqp"]
+
+[ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
+[ext_resource type="Script" uid="uid://dpytpwwbk7if6" path="res://wheel.gd" id="2_nxogm"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ulcgi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxogm"]
+albedo_texture = ExtResource("1_ulcgi")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="QuadMesh" id="QuadMesh_drvgu"]
+size = Vector2(10, 10)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ulcgi"]
+size = Vector3(1, 0.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nxogm"]
+size = Vector3(1, 0.5, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape3D_ulcgi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+material_override = SubResource("StandardMaterial3D_nxogm")
+mesh = SubResource("QuadMesh_drvgu")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.956453, 0.291888, 0, -0.291888, 0.956453, 0, 0.97508, 3.11501)
+
+[node name="Chassis" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28183, 0)
+linear_damp = 3.0
+angular_damp = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Chassis"]
+shape = SubResource("BoxShape3D_ulcgi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Chassis"]
+mesh = SubResource("BoxMesh_nxogm")
+
+[node name="Wheel" type="RigidBody3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.950028, 0)
+script = ExtResource("2_nxogm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Chassis/Wheel"]
+shape = SubResource("BoxShape3D_ulcgi")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Chassis/Wheel"]
+mesh = SubResource("BoxMesh_nxogm")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292119, 0, 0, 0)
