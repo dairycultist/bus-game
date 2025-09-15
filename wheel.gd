@@ -4,9 +4,16 @@ extends Node3D
 # it should be the child of a rigidbody representing the car's chassis
 
 # default values work good enough for a 100kg car
+
+@export_category("Suspension")
 @export var max_compression_distance: float = 1.0
 @export var stiffness: float = 1500.0
 @export var dampening: float = 150.0
+
+@export_category("Handling")
+@export var antislip: float = 100.0
+
+@export_category("Drive")
 @export var powered: bool = true
 @export var drive_force: float = 50.0
 
@@ -45,8 +52,12 @@ func _process(delta: float) -> void:
 		
 		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
+		# apply force opposite to side-to-side tire slip at wheel_contact_position
+		# antislip
+		
 		# input/powering (only when compressed/grounded)
 		# drive forces are applied at the wheel_contact_position
+		# TODO should take into account current speed (for applying force AND mesh rotation)
 		var chassis_to_wheel_contact_position = global_position + compression_distance * chassis_up - chassis.global_position
 		
 		if (powered):

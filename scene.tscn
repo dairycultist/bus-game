@@ -37,11 +37,8 @@ mesh = SubResource("QuadMesh_drvgu")
 skeleton = NodePath("../..")
 
 [node name="Chassis" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.98822, -0.153038, 0, 0.153038, 0.98822, 0, 1.16309, 0)
+transform = Transform3D(0.970042, 0.240076, -0.0371786, -0.239598, 0.920151, -0.309703, -0.0401423, 0.309333, 0.950107, 0, 1.16309, 0)
 mass = 100.0
-linear_velocity = Vector3(0, 0, -5)
-linear_damp = 0.5
-angular_damp = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="Chassis"]
 transform = Transform3D(0.738491, -0.196809, 0.644901, 0, 0.956453, 0.291888, -0.674264, -0.215556, 0.706331, 1.69432, 1.46767, 2.09409)
