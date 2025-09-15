@@ -54,6 +54,7 @@ mesh = SubResource("BoxMesh_3253y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.923608, -0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
+drive_force = 100.0
 
 [node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelFront1"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.2, 0)
@@ -64,6 +65,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.923608, -0.6)
 script = ExtResource("2_nxogm")
 max_compression_distance = 0.5
+drive_force = 100.0
 
 [node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelFront2"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0.2, 0)

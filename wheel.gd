@@ -12,10 +12,10 @@ extends Node3D
 
 func _process(delta: float) -> void:
 	
-	var chassis                := get_parent_node_3d()
-	var chassis_up             :=  global_transform.basis.y
-	var chassis_forward        := -global_transform.basis.z # -z direction is forward
-	var chassis_force_position := global_position + chassis_up * max_compression_distance - chassis.global_position
+	var chassis                        := get_parent_node_3d()
+	var chassis_up                     :=  global_transform.basis.y
+	var chassis_forward                := -global_transform.basis.z # -z direction is forward
+	var chassis_to_suspension_position := global_position + chassis_up * max_compression_distance - chassis.global_position
 	
 	# raycast from the point of max_compression_distance down
 	var max_compression_position = global_position + chassis_up * max_compression_distance
@@ -35,20 +35,24 @@ func _process(delta: float) -> void:
 		compression_distance   = max_compression_distance - (max_compression_position - ray_result.position).length()
 		var compression_amount = compression_distance / max_compression_distance
 		
-		# apply spring force based on compression_amount
-		chassis.apply_force(compression_amount * chassis_up * stiffness, chassis_force_position)
+		var wheel_contact_position = global_position - compression_distance * chassis_up
 		
-		# apply dampening force opposite to vertical velocity
-		chassis.apply_force(chassis.linear_velocity.dot(chassis_up) * -chassis_up * dampening, chassis_force_position)
+		# apply spring force at the chassis_to_suspension_position based on compression_amount
+		chassis.apply_force(compression_amount * chassis_up * stiffness, chassis_to_suspension_position)
+		
+		# apply dampening force at the chassis_to_suspension_position opposite
+		# to the vertical velocity TODO at the chassis_to_suspension_position
+		chassis.apply_force(chassis.linear_velocity.dot(chassis_up) * -chassis_up * dampening, chassis_to_suspension_position)
 		
 		# input/powering (only when compressed/grounded)
+		# drive forces are applied at the wheel_contact_position
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
-				chassis.apply_force(chassis_forward * drive_force, chassis_force_position)
+				chassis.apply_force(chassis_forward * drive_force, wheel_contact_position)
 			
 			if (Input.is_action_pressed("ui_down")):
-				chassis.apply_force(-chassis_forward * drive_force, chassis_force_position)
+				chassis.apply_force(-chassis_forward * drive_force, wheel_contact_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
