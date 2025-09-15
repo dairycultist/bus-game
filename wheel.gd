@@ -35,8 +35,6 @@ func _process(delta: float) -> void:
 		compression_distance   = max_compression_distance - (max_compression_position - ray_result.position).length()
 		var compression_amount = compression_distance / max_compression_distance
 		
-		var wheel_contact_position = global_position - compression_distance * chassis_up
-		
 		# apply spring force at the chassis_to_suspension_position based on compression_amount
 		chassis.apply_force(compression_amount * chassis_up * stiffness, chassis_to_suspension_position)
 		
@@ -48,14 +46,13 @@ func _process(delta: float) -> void:
 		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
 		# input/powering (only when compressed/grounded)
-		# drive forces are applied at the wheel_contact_position
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
-				chassis.apply_force(chassis_forward * drive_force, wheel_contact_position)
+				chassis.apply_force(chassis_forward * drive_force, chassis_to_suspension_position)
 			
 			if (Input.is_action_pressed("ui_down")):
-				chassis.apply_force(-chassis_forward * drive_force, wheel_contact_position)
+				chassis.apply_force(-chassis_forward * drive_force, chassis_to_suspension_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
