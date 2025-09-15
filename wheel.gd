@@ -3,7 +3,7 @@ extends Node3D
 # the wheel node indicates the positions at zero compression (aka the lowest point)
 # it should be the child of a rigidbody representing the car's chassis
 
-# default values work good enough for a 100kg car with 0 linear damp and 5 angular damp
+# default values work good enough for a 100kg car
 @export var max_compression_distance: float = 1.0
 @export var stiffness: float = 1500.0
 @export var dampening: float = 150.0
@@ -41,8 +41,11 @@ func _process(delta: float) -> void:
 		chassis.apply_force(compression_amount * chassis_up * stiffness, chassis_to_suspension_position)
 		
 		# apply dampening force at the chassis_to_suspension_position opposite
-		# to the vertical velocity TODO at the chassis_to_suspension_position
-		chassis.apply_force(chassis.linear_velocity.dot(chassis_up) * -chassis_up * dampening, chassis_to_suspension_position)
+		# to the vertical velocity at the chassis_to_suspension_position
+		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(chassis_to_suspension_position - chassis.global_position)
+		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up);
+		
+		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
 		# input/powering (only when compressed/grounded)
 		# drive forces are applied at the wheel_contact_position
