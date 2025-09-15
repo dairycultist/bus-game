@@ -40,19 +40,22 @@ func _process(delta: float) -> void:
 		
 		# apply dampening force at the chassis_to_suspension_position opposite
 		# to the vertical velocity at the chassis_to_suspension_position
-		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(chassis_to_suspension_position - chassis.global_position)
-		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up);
+		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(chassis_to_suspension_position)
+		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up)
 		
 		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
 		# input/powering (only when compressed/grounded)
+		# drive forces are applied at the wheel_contact_position
+		var chassis_to_wheel_contact_position = global_position + compression_distance * chassis_up - chassis.global_position
+		
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
-				chassis.apply_force(chassis_forward * drive_force, chassis_to_suspension_position)
+				chassis.apply_force(chassis_forward * drive_force, chassis_to_wheel_contact_position)
 			
 			if (Input.is_action_pressed("ui_down")):
-				chassis.apply_force(-chassis_forward * drive_force, chassis_to_suspension_position)
+				chassis.apply_force(-chassis_forward * drive_force, chassis_to_wheel_contact_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
