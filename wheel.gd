@@ -28,22 +28,11 @@ enum SteerType {
 func _process(delta: float) -> void:
 	
 	var chassis                        := get_parent_node_3d()
-	var chassis_up                     :=  global_transform.basis.y
-	var chassis_forward                := -global_transform.basis.z # -z direction is forward
+	var chassis_up                     :=  chassis.global_transform.basis.y
+	var chassis_forward                := -chassis.global_transform.basis.z # -z direction is forward
 	var chassis_to_suspension_position := global_position + chassis_up * max_compression_distance - chassis.global_position
 	
-	# raycast from the point of max_compression_distance down
-	var max_compression_position = global_position + chassis_up * max_compression_distance
-	
-	var ray_result = get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(
-		max_compression_position,
-		global_position
-	))
-	
-	# if the ray hits something before the point of zero compression, it means
-	# the suspension is compressed and we should apply a suspension force to
-	# the chassis
-	var compression_distance := 0.0
+	# turn wheel in direction of inputed steer
 	var steer_rotation := 0.0
 	
 	if (steered == SteerType.RightTurnsRight):
@@ -62,6 +51,21 @@ func _process(delta: float) -> void:
 		if (Input.is_action_pressed("ui_right")):
 			steer_rotation += deg_to_rad(max_turn_angle)
 	
+	rotation.y = steer_rotation
+	
+	# raycast from the point of max_compression_distance down
+	var max_compression_position = global_position + chassis_up * max_compression_distance
+	
+	var ray_result = get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(
+		max_compression_position,
+		global_position
+	))
+	
+	# if the ray hits something before the point of zero compression, it means
+	# the suspension is compressed, the wheel is grounded, and we should apply a
+	# relevant forces to the chassis
+	var compression_distance := 0.0
+	
 	if (ray_result):
 		
 		compression_distance   = max_compression_distance - (max_compression_position - ray_result.position).length()
@@ -77,14 +81,17 @@ func _process(delta: float) -> void:
 		
 		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
-		# apply force opposite to side-to-side tire slip at wheel_contact_position
-		# TODO antislip
-		
-		# input (powering and steering) (only when compressed/grounded)
-		# drive forces are applied at the wheel_contact_position
-		# TODO should take into account current speed (for applying force AND mesh rotation)
+		# get relative wheel contact position for applying forces to the chassis
 		var chassis_to_wheel_contact_position = global_position + compression_distance * chassis_up - chassis.global_position
 		
+		# apply force opposite to side-to-side wheel slip at chassis_to_wheel_contact_position
+		# (angle of wheel is already accounted for in its transform)
+		var sidetoside_velocity_at_position = velocity_at_position.dot(global_transform.basis.x)
+		
+		chassis.apply_force(sidetoside_velocity_at_position * -global_transform.basis.x * antislip, chassis_to_wheel_contact_position)
+		
+		# apply drive_force at the chassis_to_wheel_contact_position
+		# TODO should take into account current speed (for applying force AND mesh rotation around x)
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
@@ -92,12 +99,6 @@ func _process(delta: float) -> void:
 			
 			if (Input.is_action_pressed("ui_down")):
 				chassis.apply_force(-chassis_forward * drive_force, chassis_to_wheel_contact_position)
-		
-		if (steered != SteerType.NotSteered):
-			pass
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
-	
-	# visibly turn our mesh to match steering
-	$Mesh.rotation.y = steer_rotation
