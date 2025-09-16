@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=10 format=3 uid="uid://dfspaxgwgkgqp"]
 
+[ext_resource type="Script" uid="uid://30j8l33d21i1" path="res://camera.gd" id="1_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
 [ext_resource type="Script" uid="uid://dpytpwwbk7if6" path="res://wheel.gd" id="2_nxogm"]
 [ext_resource type="ArrayMesh" uid="uid://v4cb2i4ank60" path="res://chassis.obj" id="2_u3cyc"]
@@ -20,12 +21,19 @@ size = Vector3(1, 1, 2)
 
 [node name="Node3D" type="Node3D"]
 
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292118, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("1_m7jmp")
+target = NodePath("../Chassis/CameraTarget")
+
 [node name="Floor" type="StaticBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="Collider" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_ulcgi")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+[node name="Mesh" type="MeshInstance3D" parent="Floor"]
 material_override = SubResource("StandardMaterial3D_nxogm")
 mesh = SubResource("QuadMesh_drvgu")
 skeleton = NodePath("../..")
@@ -34,8 +42,8 @@ skeleton = NodePath("../..")
 transform = Transform3D(0.970042, 0.240076, -0.0371786, -0.239598, 0.920151, -0.309703, -0.0401423, 0.309333, 0.950107, 0, 1.16309, 0)
 mass = 100.0
 
-[node name="Camera3D" type="Camera3D" parent="Chassis"]
-transform = Transform3D(0.738491, -0.196809, 0.644901, 0, 0.956453, 0.291888, -0.674264, -0.215556, 0.706331, 1.69432, 1.46767, 2.09409)
+[node name="CameraTarget" type="Node3D" parent="Chassis"]
+transform = Transform3D(1, -2.67188e-09, -8.16876e-10, 2.79397e-09, 0.956305, 0.292372, -6.10623e-16, -0.292372, 0.956305, 0, 1.73, 2.9)
 
 [node name="Collider" type="CollisionShape3D" parent="Chassis"]
 shape = SubResource("BoxShape3D_nxogm")
@@ -90,6 +98,3 @@ powered = false
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_3253y")
 skeleton = NodePath("")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292119, 0, 0, 0)
