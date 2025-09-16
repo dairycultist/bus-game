@@ -12,10 +12,18 @@ extends Node3D
 
 @export_category("Handling")
 @export var antislip: float = 100.0
+@export var steered: SteerType = SteerType.NotSteered
+@export_range(0.0, 90.0) var max_turn_angle: float = 30.0
 
 @export_category("Drive")
 @export var powered: bool = true
 @export var drive_force: float = 50.0
+
+enum SteerType {
+	NotSteered,
+	RightTurnsRight,
+	RightTurnsLeft
+}
 
 func _process(delta: float) -> void:
 	
@@ -36,6 +44,23 @@ func _process(delta: float) -> void:
 	# the suspension is compressed and we should apply a suspension force to
 	# the chassis
 	var compression_distance := 0.0
+	var steer_rotation := 0.0
+	
+	if (steered == SteerType.RightTurnsRight):
+		
+		if (Input.is_action_pressed("ui_left")):
+			steer_rotation += deg_to_rad(max_turn_angle)
+		
+		if (Input.is_action_pressed("ui_right")):
+			steer_rotation -= deg_to_rad(max_turn_angle)
+	
+	elif (steered == SteerType.RightTurnsLeft):
+		
+		if (Input.is_action_pressed("ui_left")):
+			steer_rotation -= deg_to_rad(max_turn_angle)
+		
+		if (Input.is_action_pressed("ui_right")):
+			steer_rotation += deg_to_rad(max_turn_angle)
 	
 	if (ray_result):
 		
@@ -53,9 +78,9 @@ func _process(delta: float) -> void:
 		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, chassis_to_suspension_position)
 		
 		# apply force opposite to side-to-side tire slip at wheel_contact_position
-		# antislip
+		# TODO antislip
 		
-		# input/powering (only when compressed/grounded)
+		# input (powering and steering) (only when compressed/grounded)
 		# drive forces are applied at the wheel_contact_position
 		# TODO should take into account current speed (for applying force AND mesh rotation)
 		var chassis_to_wheel_contact_position = global_position + compression_distance * chassis_up - chassis.global_position
@@ -67,6 +92,12 @@ func _process(delta: float) -> void:
 			
 			if (Input.is_action_pressed("ui_down")):
 				chassis.apply_force(-chassis_forward * drive_force, chassis_to_wheel_contact_position)
+		
+		if (steered != SteerType.NotSteered):
+			pass
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
+	
+	# visibly turn our mesh to match steering
+	$Mesh.rotation.y = steer_rotation
