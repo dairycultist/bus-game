@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 		max_compression_position,
 		global_position
 	)
-	query.exclude = [self.get_parent_node_3d()]
+	query.exclude = [get_parent_node_3d()]
 	
 	var ray_result = get_world_3d().direct_space_state.intersect_ray(query)
 	

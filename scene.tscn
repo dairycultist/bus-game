@@ -39,8 +39,16 @@ transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0.3149349,
 [node name="CameraPivot" type="Node3D" parent="Car"]
 transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)
 
-[node name="Camera" type="Camera3D" parent="Car/CameraPivot"]
-transform = Transform3D(0.99999994, -6.4028427e-09, 0, -1.3969839e-08, 0.9563037, 0.29237163, 3.7252903e-09, -0.29237163, 0.9563036, 0, 1.7299994, 2.8999987)
-fov = 60.0
+[node name="Camera" type="Camera3D" parent="Car/CameraPivot" node_paths=PackedStringArray("camera_pos_a", "camera_pos_b")]
+transform = Transform3D(1, 1.4448607e-08, 5.2187676e-10, -1.39698395e-08, 0.9563038, 0.29237172, 3.7252907e-09, -0.29237166, 0.95630366, 0, 1.0809475, 1.32)
+fov = 100.0
 script = ExtResource("1_m7jmp")
 follow_speed = 5.0
+camera_pos_a = NodePath("../CameraPosA")
+camera_pos_b = NodePath("../CameraPosB")
+
+[node name="CameraPosA" type="Node3D" parent="Car/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7299994, 2.8999987)
+
+[node name="CameraPosB" type="Node3D" parent="Car/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.080513, 1.32)

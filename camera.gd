@@ -2,13 +2,10 @@ extends Camera3D
 
 @export var follow_speed: float = 10.0
 
+@export var camera_pos_a: Node3D # at a standstill
+@export var camera_pos_b: Node3D # moving very fast (pulled in)
+
 var angle := 0.0
-
-# TODO camera should always stay above bus looking down, even if it leans or tips over
-
-#func _ready() -> void:
-	#global_position = target.global_position
-	#global_rotation = target.global_rotation
 
 func _process(delta: float) -> void:
 	
@@ -17,10 +14,12 @@ func _process(delta: float) -> void:
 	
 	angle = lerp_angle(angle, car.global_rotation.y, delta * 4.0)
 	
+	# ensure camera is always above the car (even if tipped over) and
+	# (generally) facing where the car is facing
 	camera_pivot.global_rotation = Vector3(0, angle, 0)
 	
-	#global_position = lerp(global_position, target.global_position, delta * follow_speed)
-	#global_basis = Basis(Quaternion(global_basis).slerp(Quaternion(target.global_basis), delta * follow_speed))
+	# FOV (60 - 100)
+	fov = min(60 + car.linear_velocity.length() * 4, 100)
 	
-	# FOV
-	self.fov = 60 + car.linear_velocity.length() * 4
+	# position
+	position = lerp(camera_pos_a.position, camera_pos_b.position, min(car.linear_velocity.length() * 0.1, 1.0))
