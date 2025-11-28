@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=8 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Script" uid="uid://30j8l33d21i1" path="res://camera.gd" id="1_m7jmp"]
 [ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
-[ext_resource type="Script" uid="uid://dpytpwwbk7if6" path="res://wheel.gd" id="2_nxogm"]
-[ext_resource type="ArrayMesh" uid="uid://v4cb2i4ank60" path="res://chassis.obj" id="2_u3cyc"]
-[ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://wheel.obj" id="3_3253y"]
+[ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://car_scenes/car.tscn" id="3_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://c68f5jmq4raxg" path="res://road.blend" id="4_m7jmp"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ulcgi"]
 
@@ -13,11 +12,8 @@ albedo_texture = ExtResource("1_ulcgi")
 uv1_scale = Vector3(100, 100, 100)
 
 [sub_resource type="QuadMesh" id="QuadMesh_drvgu"]
-size = Vector2(100, 100)
+size = Vector2(200, 200)
 orientation = 1
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nxogm"]
-size = Vector3(1, 1, 2)
 
 [node name="Node3D" type="Node3D"]
 
@@ -26,7 +22,8 @@ transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.8313
 
 [node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("1_m7jmp")
-target = NodePath("../Chassis/CameraTarget")
+target = NodePath("../Car/CameraTarget")
+follow_speed = 5.0
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -38,63 +35,11 @@ material_override = SubResource("StandardMaterial3D_nxogm")
 mesh = SubResource("QuadMesh_drvgu")
 skeleton = NodePath("../..")
 
-[node name="Chassis" type="RigidBody3D" parent="."]
-transform = Transform3D(0.970042, 0.240076, -0.0371786, -0.239598, 0.920151, -0.309703, -0.0401423, 0.309333, 0.950107, 0, 1.16309, 0)
-mass = 100.0
+[node name="road" parent="Floor" instance=ExtResource("4_m7jmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.71376, 0.023415923, -31.816973)
 
-[node name="CameraTarget" type="Node3D" parent="Chassis"]
+[node name="Car" parent="." instance=ExtResource("3_u3cyc")]
+transform = Transform3D(0.970042, 0.24007589, -0.037178587, -0.239598, 0.920151, -0.30970317, -0.040142298, 0.30933297, 0.9501069, 0, 1.16309, 0)
+
+[node name="CameraTarget" type="Node3D" parent="Car"]
 transform = Transform3D(1, -2.67188e-09, -8.16876e-10, 2.79397e-09, 0.956305, 0.292372, -6.10623e-16, -0.292372, 0.956305, 0, 1.73, 2.9)
-
-[node name="Collider" type="CollisionShape3D" parent="Chassis"]
-shape = SubResource("BoxShape3D_nxogm")
-
-[node name="Mesh" type="MeshInstance3D" parent="Chassis"]
-mesh = ExtResource("2_u3cyc")
-
-[node name="WheelFront1" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.724, -0.6)
-script = ExtResource("2_nxogm")
-max_compression_distance = 0.5
-steered = 1
-drive_force = 100.0
-
-[node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelFront1"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_3253y")
-skeleton = NodePath("")
-
-[node name="WheelFront2" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.724, -0.6)
-script = ExtResource("2_nxogm")
-max_compression_distance = 0.5
-steered = 1
-drive_force = 100.0
-
-[node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelFront2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_3253y")
-skeleton = NodePath("")
-
-[node name="WheelBack1" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.724, 0.6)
-script = ExtResource("2_nxogm")
-max_compression_distance = 0.5
-steered = 2
-powered = false
-
-[node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelBack1"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_3253y")
-skeleton = NodePath("")
-
-[node name="WheelBack2" type="Node3D" parent="Chassis"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.724, 0.6)
-script = ExtResource("2_nxogm")
-max_compression_distance = 0.5
-steered = 2
-powered = false
-
-[node name="Mesh" type="MeshInstance3D" parent="Chassis/WheelBack2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_3253y")
-skeleton = NodePath("")
