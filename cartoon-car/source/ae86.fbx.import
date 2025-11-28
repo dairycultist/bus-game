@@ -1,0 +1,92 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://i08txglsg5wt"
+path="res://.godot/imported/ae86.fbx-3b3acb3cb9c782e21bc3f8767a6ce25a.scn"
+
+[deps]
+
+source_file="res://cartoon-car/source/ae86.fbx"
+dest_files=["res://.godot/imported/ae86.fbx-3b3acb3cb9c782e21bc3f8767a6ce25a.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=true
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path=""
+materials/extract=0
+materials/extract_format=0
+materials/extract_path=""
+_subresources={
+"materials": {
+"Pure black": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_black.tres",
+"use_external/path": "uid://pbrjxym2iv81"
+},
+"black parts": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_black.tres",
+"use_external/path": "uid://pbrjxym2iv81"
+},
+"car body": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_body.tres",
+"use_external/path": "uid://cg0uqx3o4kfkv"
+},
+"carbon fiber": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_carbon.tres",
+"use_external/path": "uid://djvdvueaoacug"
+},
+"chrome": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_chrome.tres",
+"use_external/path": "uid://cotdq3231q8j0"
+},
+"headlight glass": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_lights.tres",
+"use_external/path": "uid://dr680lt3ykigw"
+},
+"intercooler": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_intercooler.tres",
+"use_external/path": "uid://bp3tynfx8p8k5"
+},
+"wheel": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_carbon.tres",
+"use_external/path": "uid://djvdvueaoacug"
+},
+"window": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://cartoon-car/textures/car_glass.tres",
+"use_external/path": "uid://bvto773u1lh1k"
+}
+}
+}
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1
+fbx/naming_version=2

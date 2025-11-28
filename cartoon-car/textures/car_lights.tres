@@ -1,0 +1,13 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dr680lt3ykigw"]
+
+[ext_resource type="Texture2D" uid="uid://cjvt1n3xw11hj" path="res://cartoon-car/textures/lights_headlight_glass_BaseColor.png" id="1_85kbc"]
+[ext_resource type="Texture2D" uid="uid://bdu12tq4k6n0j" path="res://cartoon-car/textures/lights_headlight_glass_Normal.png" id="2_740e3"]
+
+[resource]
+albedo_texture = ExtResource("1_85kbc")
+emission_enabled = true
+emission_energy_multiplier = 3.0
+emission_texture = ExtResource("1_85kbc")
+normal_enabled = true
+normal_scale = 2.0
+normal_texture = ExtResource("2_740e3")

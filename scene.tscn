@@ -19,6 +19,10 @@ orientation = 1
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292118, 0, 0, 0)
+light_energy = 1.5
+shadow_enabled = true
+shadow_opacity = 0.6
+shadow_blur = 2.113
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -34,7 +38,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.71376, 0.023415923, -31.816973)
 
 [node name="Car" parent="." instance=ExtResource("3_u3cyc")]
-transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0.3149349, 0)
+transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0.20972735, 0)
 
 [node name="CameraPivot" type="Node3D" parent="Car"]
 transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)

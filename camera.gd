@@ -18,8 +18,11 @@ func _process(delta: float) -> void:
 	# (generally) facing where the car is facing
 	camera_pivot.global_rotation = Vector3(0, angle, 0)
 	
+	# speed fac
+	var speed_fac = pow(min(car.linear_velocity.length() * 0.05, 1.0), 0.8)
+	
 	# FOV (60 - 100)
-	fov = min(60 + car.linear_velocity.length() * 4, 100)
+	fov = 60 + speed_fac * 40
 	
 	# position
-	position = lerp(camera_pos_a.position, camera_pos_b.position, min(car.linear_velocity.length() * 0.1, 1.0))
+	position = lerp(camera_pos_a.position, camera_pos_b.position, speed_fac)

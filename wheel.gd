@@ -5,6 +5,8 @@ extends Node3D
 
 # default values work good enough for a 100kg car
 
+# https://sketchfab.com/3d-models/cartoon-car-09431a8df4344a84aa83a4095bef10fc
+
 @export_category("Suspension")
 @export var max_compression_distance: float = 1.0 # ensure this point is located within the parent car's collider to prevent the tire "falling through" level collision
 @export var stiffness: float = 1500.0
