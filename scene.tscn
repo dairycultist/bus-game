@@ -20,11 +20,6 @@ orientation = 1
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292118, 0, 0, 0)
 
-[node name="Camera" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-script = ExtResource("1_m7jmp")
-target = NodePath("../Car/CameraTarget")
-follow_speed = 5.0
-
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="Collider" type="CollisionShape3D" parent="Floor"]
@@ -39,7 +34,13 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.71376, 0.023415923, -31.816973)
 
 [node name="Car" parent="." instance=ExtResource("3_u3cyc")]
-transform = Transform3D(0.970042, 0.24007589, -0.037178587, -0.239598, 0.920151, -0.30970317, -0.040142298, 0.30933297, 0.9501069, 0, 1.16309, 0)
+transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0.3149349, 0)
 
-[node name="CameraTarget" type="Node3D" parent="Car"]
-transform = Transform3D(1, -2.67188e-09, -8.16876e-10, 2.79397e-09, 0.956305, 0.292372, -6.10623e-16, -0.292372, 0.956305, 0, 1.73, 2.9)
+[node name="CameraPivot" type="Node3D" parent="Car"]
+transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="Car/CameraPivot"]
+transform = Transform3D(0.99999994, -6.4028427e-09, 0, -1.3969839e-08, 0.9563037, 0.29237163, 3.7252903e-09, -0.29237163, 0.9563036, 0, 1.7299994, 2.8999987)
+fov = 60.0
+script = ExtResource("1_m7jmp")
+follow_speed = 5.0

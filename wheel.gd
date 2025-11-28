@@ -6,11 +6,13 @@ extends Node3D
 # default values work good enough for a 100kg car
 
 @export_category("Suspension")
-@export var max_compression_distance: float = 1.0
+@export var max_compression_distance: float = 1.0 # ensure this point is located within the parent car's collider to prevent the tire "falling through" level collision
 @export var stiffness: float = 1500.0
 @export var dampening: float = 150.0
 
 @export_category("Handling")
+
+## Decreases drift and allows for sharper turns, but increases likelihood of rollover.
 @export var antislip: float = 100.0
 @export var steered: SteerType = SteerType.NotSteered
 @export_range(0.0, 90.0) var max_turn_angle: float = 30.0
@@ -25,7 +27,7 @@ enum SteerType {
 	RightTurnsLeft
 }
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	var chassis                        := get_parent_node_3d()
 	var chassis_up                     :=  chassis.global_transform.basis.y
@@ -53,13 +55,17 @@ func _process(delta: float) -> void:
 	
 	rotation.y = steer_rotation
 	
-	# raycast from the point of max_compression_distance down
+	# raycast from the point of max_compression_distance down,
+	# ignoring the car's collider
 	var max_compression_position = global_position + chassis_up * max_compression_distance
 	
-	var ray_result = get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(
+	var query = PhysicsRayQueryParameters3D.create(
 		max_compression_position,
 		global_position
-	))
+	)
+	query.exclude = [self.get_parent_node_3d()]
+	
+	var ray_result = get_world_3d().direct_space_state.intersect_ray(query)
 	
 	# if the ray hits something before the point of zero compression, it means
 	# the suspension is compressed, the wheel is grounded, and we should apply a

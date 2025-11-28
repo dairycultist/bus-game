@@ -22,12 +22,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29960963, 0)
 mesh = SubResource("BoxMesh_4j241")
 
 [node name="WheelFront1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.1717361, -0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.11530759, -0.6)
 script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1000.0
 dampening = 300.0
-antislip = 30.0
+antislip = 40.0
 steered = 1
 max_turn_angle = 10.0
 drive_force = 150.0
@@ -38,12 +38,12 @@ mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
 [node name="WheelFront2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.1717361, -0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.11530759, -0.6)
 script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1000.0
 dampening = 300.0
-antislip = 30.0
+antislip = 40.0
 steered = 1
 max_turn_angle = 10.0
 drive_force = 150.0
@@ -54,12 +54,12 @@ mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
 [node name="WheelBack1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.1717361, 0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.11530759, 0.6)
 script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1000.0
 dampening = 300.0
-antislip = 30.0
+antislip = 40.0
 steered = 2
 max_turn_angle = 10.0
 powered = false
@@ -70,12 +70,12 @@ mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
 [node name="WheelBack2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.1717361, 0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.11530759, 0.6)
 script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1000.0
 dampening = 300.0
-antislip = 30.0
+antislip = 40.0
 steered = 2
 max_turn_angle = 10.0
 powered = false
