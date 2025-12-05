@@ -6,7 +6,8 @@ extends Node3D
 # https://sketchfab.com/3d-models/cartoon-car-09431a8df4344a84aa83a4095bef10fc
 
 @export_category("Suspension")
-@export var max_compression_distance: float = 1.0
+
+## How much the suspension opposes being compressed.
 @export var stiffness: float = 1500.0
 @export var dampening: float = 150.0
 
@@ -57,22 +58,16 @@ func _turn_wheels(delta):
 	
 	rotation.y = lerp(rotation.y, steer_rotation, delta * 10)
 
-func _compress_suspension() -> float: # returns amount of compression, [0..1]
+func _compress_suspension() -> float: # returns the compression distance
 	
-	# TODO completely remove max_compression_distance
-	# have suspension mount position be determined by a parent node
-	# have spring force be based on compression distance, not amount
-	
-	var chassis                   := get_parent_node_3d()
+	var suspension_mount          := get_parent_node_3d()
+	var chassis                   := suspension_mount.get_parent_node_3d()
 	var chassis_up                := chassis.global_transform.basis.y
-	var suspension_mount_position := global_position + chassis_up * max_compression_distance - chassis.global_position
 	
-	var max_compression_global_position := global_position + chassis_up * max_compression_distance
-	
-	# raycast somewhere above max_compression_position down (to prevent
+	# raycast somewhere decently above the wheel's lowest contact position (to prevent
 	# clipping through the ground), ignoring the chassis's collider
 	var query = PhysicsRayQueryParameters3D.create(
-		max_compression_global_position + chassis_up * 0.5,
+		global_position + chassis_up * 0.5,
 		global_position
 	)
 	query.exclude = [chassis]
@@ -83,24 +78,22 @@ func _compress_suspension() -> float: # returns amount of compression, [0..1]
 	# the suspension is compressed, the wheel is grounded, and we should apply a
 	# relevant forces to the chassis
 	var compression_distance := 0.0
-	var compression_amount := 0.0
 	
 	if (ray_result):
 		
 		compression_distance = (global_position - ray_result.position).length()
-		compression_amount = compression_distance / max_compression_distance
 		
 		# apply spring force at the suspension_mount_position based on compression_amount
-		chassis.apply_force(compression_amount * chassis_up * stiffness, suspension_mount_position)
+		chassis.apply_force(compression_distance * chassis_up * stiffness, suspension_mount.position)
 		
 		# apply dampening force at the suspension_mount_position opposite
 		# to the vertical velocity at the suspension_mount_position
-		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(suspension_mount_position)
+		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(suspension_mount.position)
 		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up)
 		
-		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, suspension_mount_position)
+		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, suspension_mount.position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
 	
-	return compression_amount
+	return compression_distance

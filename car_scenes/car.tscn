@@ -15,68 +15,76 @@ mass = 500.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24023768, 0)
 shape = SubResource("BoxShape3D_nxogm")
 
-[node name="WheelFront1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.18134485, -0.425)
+[node name="SuspensionMountFL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28428423, 0.1, -0.425)
+
+[node name="Wheel" type="Node3D" parent="SuspensionMountFL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.065
-stiffness = 1400.0
-dampening = 800.0
+stiffness = 30000.0
+dampening = 1200.0
 antislip = 120.0
 steered = 1
 max_turn_angle = 15.0
 drive_force = 4000.0
 
-[node name="Mesh" type="MeshInstance3D" parent="WheelFront1"]
+[node name="Mesh" type="MeshInstance3D" parent="SuspensionMountFL/Wheel"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
-[node name="WheelFront2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.18172255, -0.4253397)
+[node name="SuspensionMountFR" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.284, 0.1, -0.425)
+
+[node name="Wheel" type="Node3D" parent="SuspensionMountFR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.065
-stiffness = 1400.0
-dampening = 800.0
+stiffness = 30000.0
+dampening = 1200.0
 antislip = 120.0
 steered = 1
 max_turn_angle = 15.0
 drive_force = 4000.0
 
-[node name="Mesh" type="MeshInstance3D" parent="WheelFront2"]
+[node name="Mesh" type="MeshInstance3D" parent="SuspensionMountFR/Wheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
-[node name="WheelBack1" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.18172255, 0.45444986)
+[node name="SuspensionMountBL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284, 0.1, 0.454)
+
+[node name="Wheel" type="Node3D" parent="SuspensionMountBL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.065
-stiffness = 1400.0
-dampening = 800.0
+stiffness = 30000.0
+dampening = 1200.0
 antislip = 120.0
 steered = 2
 max_turn_angle = 15.0
 powered = false
 drive_force = 4000.0
 
-[node name="Mesh" type="MeshInstance3D" parent="WheelBack1"]
+[node name="Mesh" type="MeshInstance3D" parent="SuspensionMountBL/Wheel"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
-[node name="WheelBack2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.18172255, 0.45444986)
+[node name="SuspensionMountBR" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.284, 0.1, 0.454)
+
+[node name="Wheel" type="Node3D" parent="SuspensionMountBR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.065
-stiffness = 1400.0
-dampening = 800.0
+stiffness = 30000.0
+dampening = 1200.0
 antislip = 120.0
 steered = 2
 max_turn_angle = 15.0
 powered = false
 drive_force = 4000.0
 
-[node name="Mesh" type="MeshInstance3D" parent="WheelBack2"]
+[node name="Mesh" type="MeshInstance3D" parent="SuspensionMountBR/Wheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 mesh = ExtResource("3_td361")
 skeleton = NodePath("")
