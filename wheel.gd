@@ -104,10 +104,10 @@ func _process(_delta: float) -> void:
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
-				chassis.apply_force(chassis_forward * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
+				chassis.apply_force(-self.global_transform.basis.z * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
 			
 			if (Input.is_action_pressed("ui_down")):
-				chassis.apply_force(-chassis_forward * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
+				chassis.apply_force(self.global_transform.basis.z * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
