@@ -85,6 +85,7 @@ func _compress_suspension(suspension_mount: Node3D, chassis: Node3D, chassis_up:
 	# the suspension is compressed, the wheel is grounded, and we should apply a
 	# relevant forces to the chassis
 	var compression_distance := 0.0
+	var suspension_force := 0.0
 	
 	if (ray_result):
 		
@@ -93,15 +94,17 @@ func _compress_suspension(suspension_mount: Node3D, chassis: Node3D, chassis_up:
 		# position at which suspension force is applied
 		var suspension_mount_position := suspension_mount.global_position - chassis.global_position
 		
-		# apply spring force at the suspension_mount_position based on compression_amount
-		chassis.apply_force(compression_distance * chassis_up * stiffness, suspension_mount_position)
+		# stiffness opposes compression
+		suspension_force += compression_distance * stiffness
 		
-		# apply dampening force at the suspension_mount_position opposite
-		# to the vertical velocity at the suspension_mount_position
+		# dampening opposes vertical velocity at the suspension_mount_position
 		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(suspension_mount_position)
 		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up)
 		
-		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, suspension_mount_position)
+		suspension_force -= vertical_velocity_at_position * dampening
+		
+		# apply force
+		chassis.apply_force(suspension_force * chassis_up, suspension_mount_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
