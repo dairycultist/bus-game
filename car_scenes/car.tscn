@@ -9,7 +9,7 @@ size = Vector3(0.85, 0.6187439, 1.7)
 
 [node name="Car" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0, 0)
-mass = 500.068
+mass = 500.0
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24023768, 0)
@@ -18,12 +18,12 @@ shape = SubResource("BoxShape3D_nxogm")
 [node name="WheelFront1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.18134485, -0.425)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.2
-stiffness = 3000.0
-dampening = 3000.0
-antislip = 160.0
+max_compression_distance = 0.065
+stiffness = 1400.0
+dampening = 800.0
+antislip = 120.0
 steered = 1
-max_turn_angle = 12.0
+max_turn_angle = 15.0
 drive_force = 4000.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront1"]
@@ -34,12 +34,12 @@ skeleton = NodePath("")
 [node name="WheelFront2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.18172255, -0.4253397)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.2
-stiffness = 3000.0
-dampening = 3000.0
-antislip = 160.0
+max_compression_distance = 0.065
+stiffness = 1400.0
+dampening = 800.0
+antislip = 120.0
 steered = 1
-max_turn_angle = 12.0
+max_turn_angle = 15.0
 drive_force = 4000.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront2"]
@@ -50,12 +50,12 @@ skeleton = NodePath("")
 [node name="WheelBack1" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.18172255, 0.45444986)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.2
-stiffness = 3000.0
-dampening = 3000.0
-antislip = 160.0
+max_compression_distance = 0.065
+stiffness = 1400.0
+dampening = 800.0
+antislip = 120.0
 steered = 2
-max_turn_angle = 12.0
+max_turn_angle = 15.0
 powered = false
 drive_force = 4000.0
 
@@ -67,12 +67,12 @@ skeleton = NodePath("")
 [node name="WheelBack2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.18172255, 0.45444986)
 script = ExtResource("2_06lh1")
-max_compression_distance = 0.2
-stiffness = 3000.0
-dampening = 3000.0
-antislip = 160.0
+max_compression_distance = 0.065
+stiffness = 1400.0
+dampening = 800.0
+antislip = 120.0
 steered = 2
-max_turn_angle = 12.0
+max_turn_angle = 15.0
 powered = false
 drive_force = 4000.0
 
