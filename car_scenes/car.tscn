@@ -24,7 +24,7 @@ dampening = 700.0
 antislip = 40.0
 steered = 1
 max_turn_angle = 15.0
-drive_force = 170.0
+drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront1"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -40,7 +40,7 @@ dampening = 700.0
 antislip = 40.0
 steered = 1
 max_turn_angle = 15.0
-drive_force = 170.0
+drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

@@ -98,15 +98,16 @@ func _process(_delta: float) -> void:
 		
 		chassis.apply_force(sidetoside_velocity_at_position * -global_transform.basis.x * antislip, chassis_to_wheel_contact_position)
 		
-		# apply drive_force at the chassis_to_wheel_contact_position
+		# apply drive_force at the chassis_to_wheel_contact_position proportional
+		# to compression distance (a barely grounded tire barely applies force! prevents bouncing)
 		# TODO should take into account current speed (for applying force AND mesh rotation around x)
 		if (powered):
 			
 			if (Input.is_action_pressed("ui_up")):
-				chassis.apply_force(chassis_forward * drive_force, chassis_to_wheel_contact_position)
+				chassis.apply_force(chassis_forward * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
 			
 			if (Input.is_action_pressed("ui_down")):
-				chassis.apply_force(-chassis_forward * drive_force, chassis_to_wheel_contact_position)
+				chassis.apply_force(-chassis_forward * drive_force * compression_distance / max_compression_distance, chassis_to_wheel_contact_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
