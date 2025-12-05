@@ -30,11 +30,22 @@ enum SteerType {
 
 func _process(delta: float) -> void:
 	
+	var suspension_mount          := get_parent_node_3d()
+	var chassis                   := suspension_mount.get_parent_node_3d()
+	var chassis_up                := chassis.global_transform.basis.y
+	
 	_turn_wheels(delta)
-	_compress_suspension()
+	var compression_distance := _compress_suspension(suspension_mount, chassis, chassis_up)
+	_apply_wheel_contact_force(compression_distance, chassis, chassis_up)
+
+func _apply_wheel_contact_force(compression_distance: float, chassis: RigidBody3D, chassis_up: Vector3):
 	
 	# get relative wheel contact position for applying forces to the chassis
-	#var chassis_to_wheel_contact_position = global_position + compression_distance * chassis_up - chassis.global_position
+	var wheel_contact_position := global_position + compression_distance * chassis_up - chassis.global_position
+	var wheel_forward          := -global_basis.z
+	
+	if Input.is_action_pressed("ui_up"):
+		chassis.apply_force(wheel_forward * drive_force * compression_distance, wheel_contact_position)
 
 func _turn_wheels(delta):
 	
@@ -58,11 +69,7 @@ func _turn_wheels(delta):
 	
 	rotation.y = lerp(rotation.y, steer_rotation, delta * 10)
 
-func _compress_suspension() -> float: # returns the compression distance
-	
-	var suspension_mount          := get_parent_node_3d()
-	var chassis                   := suspension_mount.get_parent_node_3d()
-	var chassis_up                := chassis.global_transform.basis.y
+func _compress_suspension(suspension_mount: Node3D, chassis: Node3D, chassis_up: Vector3) -> float: # returns the compression distance
 	
 	# raycast somewhere decently above the wheel's lowest contact position (to prevent
 	# clipping through the ground), ignoring the chassis's collider
@@ -83,15 +90,18 @@ func _compress_suspension() -> float: # returns the compression distance
 		
 		compression_distance = (global_position - ray_result.position).length()
 		
+		# position at which suspension force is applied
+		var suspension_mount_position := suspension_mount.global_position - chassis.global_position
+		
 		# apply spring force at the suspension_mount_position based on compression_amount
-		chassis.apply_force(compression_distance * chassis_up * stiffness, suspension_mount.position)
+		chassis.apply_force(compression_distance * chassis_up * stiffness, suspension_mount_position)
 		
 		# apply dampening force at the suspension_mount_position opposite
 		# to the vertical velocity at the suspension_mount_position
-		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(suspension_mount.position)
+		var velocity_at_position = chassis.linear_velocity + chassis.angular_velocity.cross(suspension_mount_position)
 		var vertical_velocity_at_position = velocity_at_position.dot(chassis_up)
 		
-		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, suspension_mount.position)
+		chassis.apply_force(vertical_velocity_at_position * -chassis_up * dampening, suspension_mount_position)
 	
 	# visibly push our mesh up during compression
 	$Mesh.position.y = compression_distance + 0.2
