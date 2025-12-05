@@ -21,6 +21,7 @@ extends Node3D
 @export_category("Drive")
 @export var powered: bool = true
 @export var torque: float = 50.0
+@export var downforce: float = 50.0
 
 enum SteerType {
 	NotSteered,
@@ -31,8 +32,8 @@ enum SteerType {
 func _process(delta: float) -> void:
 	
 	var suspension_mount          := get_parent_node_3d()
-	var chassis                   := suspension_mount.get_parent_node_3d()
-	var chassis_up                := chassis.global_transform.basis.y
+	var chassis: RigidBody3D       = suspension_mount.get_parent_node_3d()
+	var chassis_up                := chassis.global_basis.y
 	
 	_steer_wheels(delta)
 	
@@ -41,6 +42,11 @@ func _process(delta: float) -> void:
 	var suspension_force = suspension_info[1]
 	
 	_apply_wheel_contact_force(compression_distance, suspension_force, chassis, chassis_up)
+	
+	# downforce
+	var speed = abs(chassis.linear_velocity.dot(-chassis.global_basis.z))
+	
+	chassis.apply_central_force(-chassis_up * speed * downforce)
 
 func _apply_wheel_contact_force(compression_distance: float, suspension_force: float, chassis: RigidBody3D, chassis_up: Vector3):
 	
