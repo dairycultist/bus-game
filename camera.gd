@@ -26,3 +26,8 @@ func _process(delta: float) -> void:
 	
 	# position
 	position = lerp(camera_pos_a.position, camera_pos_b.position, speed_fac)
+	
+	# shake
+	var shake = 0.02 * speed_fac * speed_fac
+	h_offset = randf_range(-shake, shake)
+	v_offset = randf_range(-shake, shake)
