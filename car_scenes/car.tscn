@@ -5,14 +5,14 @@
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://wheel.obj" id="3_td361"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nxogm"]
-size = Vector3(0.85, 0.6691284, 1.7)
+size = Vector3(0.85, 0.6187439, 1.7)
 
 [node name="Car" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0, 0)
 mass = 100.0
 
 [node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21504542, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24023768, 0)
 shape = SubResource("BoxShape3D_nxogm")
 
 [node name="WheelFront1" type="Node3D" parent="."]
@@ -21,9 +21,10 @@ script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1100.0
 dampening = 700.0
-antislip = 40.0
+antislip = 150.0
 steered = 1
 max_turn_angle = 15.0
+powered = false
 drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront1"]
@@ -37,9 +38,10 @@ script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1100.0
 dampening = 700.0
-antislip = 40.0
+antislip = 150.0
 steered = 1
 max_turn_angle = 15.0
+powered = false
 drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelFront2"]
@@ -53,10 +55,10 @@ script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1100.0
 dampening = 700.0
-antislip = 40.0
+antislip = 150.0
 steered = 2
 max_turn_angle = 15.0
-powered = false
+drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelBack1"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -69,10 +71,10 @@ script = ExtResource("2_06lh1")
 max_compression_distance = 0.2
 stiffness = 1100.0
 dampening = 700.0
-antislip = 40.0
+antislip = 150.0
 steered = 2
 max_turn_angle = 15.0
-powered = false
+drive_force = 600.0
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelBack2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
