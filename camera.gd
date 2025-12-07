@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 	fov = 60 + speed_fac * 40
 	
 	# position
-	position = lerp(camera_pos_a.position, camera_pos_b.position, speed_fac)
+	position = lerp(position, lerp(camera_pos_a.position, camera_pos_b.position, speed_fac), delta * 5)
 	
 	# shake
 	var shake = 0.02 * speed_fac * speed_fac

@@ -21,13 +21,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28428423, 0.1, -0.425)
 [node name="Wheel" type="Node3D" parent="SuspensionMountFL"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-stiffness = 27000.0
+stiffness = 24000.0
 dampening = 1800.0
-antislip = 0.2
+antislip = 0.12
 steered = 1
 max_turn_angle = 15.0
 torque = 1.0
-downforce = 200.0
+downforce = 180.0
 
 [node name="Mesh" type="MeshInstance3D" parent="SuspensionMountFL/Wheel"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -40,13 +40,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.284, 0.1, -0.425)
 [node name="Wheel" type="Node3D" parent="SuspensionMountFR"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-stiffness = 27000.0
+stiffness = 24000.0
 dampening = 1800.0
-antislip = 0.2
+antislip = 0.12
 steered = 1
 max_turn_angle = 15.0
 torque = 1.0
-downforce = 200.0
+downforce = 180.0
 
 [node name="Mesh" type="MeshInstance3D" parent="SuspensionMountFR/Wheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -59,14 +59,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.284, 0.1, 0.454)
 [node name="Wheel" type="Node3D" parent="SuspensionMountBL"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-stiffness = 27000.0
+stiffness = 24000.0
 dampening = 1800.0
-antislip = 0.2
+antislip = 0.12
 steered = 2
 max_turn_angle = 15.0
 powered = false
 torque = 1.0
-downforce = 200.0
+downforce = 180.0
 
 [node name="Mesh" type="MeshInstance3D" parent="SuspensionMountBL/Wheel"]
 transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -79,14 +79,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.284, 0.1, 0.454)
 [node name="Wheel" type="Node3D" parent="SuspensionMountBR"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.096, -0.3, 0)
 script = ExtResource("2_06lh1")
-stiffness = 27000.0
+stiffness = 24000.0
 dampening = 1800.0
-antislip = 0.2
+antislip = 0.12
 steered = 2
 max_turn_angle = 15.0
 powered = false
 torque = 1.0
-downforce = 200.0
+downforce = 180.0
 
 [node name="Mesh" type="MeshInstance3D" parent="SuspensionMountBR/Wheel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
