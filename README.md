@@ -1,6 +1,7 @@
-# bus-game
+# Rally Game
 
-https://x.com/Sakis25/status/1996622288939327547?s=20
-https://x.com/PlayStationPark/status/1996660337605517681?s=20
+Each track is split into "stretches" (First Stretch! Second Stretch! Final Stretch!)
 
-maybe this is it... my passion project...
+!()[https://static0.srcdn.com/wordpress/wp-content/uploads/2024/03/hse5.png?w=1600&h=1200&fit=crop]
+
+!()[https://www.canevarally.com/gravel/wp-content/uploads/2024/07/fia-rally-classes.jpg]
