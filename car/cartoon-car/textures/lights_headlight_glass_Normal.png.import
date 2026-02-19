@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpugpeik71j51"
-path.s3tc="res://.godot/imported/carbon_fiber_carbon_fiber_Roughness.png-101e8acd5e457a5a755c5964bf6b8c17.s3tc.ctex"
+uid="uid://bdu12tq4k6n0j"
+path.s3tc="res://.godot/imported/lights_headlight_glass_Normal.png-36394935716a3708efa2f9d6c2b77918.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://cartoon-car/textures/carbon_fiber_carbon_fiber_Roughness.png"
-dest_files=["res://.godot/imported/carbon_fiber_carbon_fiber_Roughness.png-101e8acd5e457a5a755c5964bf6b8c17.s3tc.ctex"]
+source_file="res://car/cartoon-car/textures/lights_headlight_glass_Normal.png"
+dest_files=["res://.godot/imported/lights_headlight_glass_Normal.png-36394935716a3708efa2f9d6c2b77918.s3tc.ctex"]
 
 [params]
 
@@ -22,12 +22,12 @@ compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://cartoon-car/textures/lights_headlight_glass_Normal.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

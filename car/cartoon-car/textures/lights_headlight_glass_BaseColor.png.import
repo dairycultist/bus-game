@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhhhkxqjp36eu"
-path.s3tc="res://.godot/imported/carbon_fiber_carbon_fiber_Metallic.png-cbe0bc63507dfc37f526c36ab2893b9c.s3tc.ctex"
+uid="uid://cjvt1n3xw11hj"
+path.s3tc="res://.godot/imported/lights_headlight_glass_BaseColor.png-0509d6d92fffd47949a3fc354564c212.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://cartoon-car/textures/carbon_fiber_carbon_fiber_Metallic.png"
-dest_files=["res://.godot/imported/carbon_fiber_carbon_fiber_Metallic.png-cbe0bc63507dfc37f526c36ab2893b9c.s3tc.ctex"]
+source_file="res://car/cartoon-car/textures/lights_headlight_glass_BaseColor.png"
+dest_files=["res://.godot/imported/lights_headlight_glass_BaseColor.png-0509d6d92fffd47949a3fc354564c212.s3tc.ctex"]
 
 [params]
 

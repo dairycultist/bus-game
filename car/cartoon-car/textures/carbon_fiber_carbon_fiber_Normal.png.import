@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5jbya0e0pl6e"
-path.s3tc="res://.godot/imported/intercooler_intercooler_Normal.png-9609ac8cf80b827059cdc416ffb71094.s3tc.ctex"
+uid="uid://cpt35fhcdhn0d"
+path.s3tc="res://.godot/imported/carbon_fiber_carbon_fiber_Normal.png-80647b80261dd42d06dfc485887dfbae.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://cartoon-car/textures/intercooler_intercooler_Normal.png"
-dest_files=["res://.godot/imported/intercooler_intercooler_Normal.png-9609ac8cf80b827059cdc416ffb71094.s3tc.ctex"]
+source_file="res://car/cartoon-car/textures/carbon_fiber_carbon_fiber_Normal.png"
+dest_files=["res://.godot/imported/carbon_fiber_carbon_fiber_Normal.png-80647b80261dd42d06dfc485887dfbae.s3tc.ctex"]
 
 [params]
 
@@ -27,7 +27,7 @@ compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=1
-roughness/src_normal="res://cartoon-car/textures/intercooler_intercooler_Normal.png"
+roughness/src_normal="res://cartoon-car/textures/carbon_fiber_carbon_fiber_Normal.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

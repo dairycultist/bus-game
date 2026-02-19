@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqs6dsg0ph3d"]
+
+[ext_resource type="Script" uid="uid://30j8l33d21i1" path="res://car/camera.gd" id="1_52qhs"]
+[ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/car.gd" id="1_jpe8o"]
+[ext_resource type="PackedScene" uid="uid://i08txglsg5wt" path="res://car/cartoon-car/source/ae86.fbx" id="3_14wov"]
+[ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://car/wheel.obj" id="3_td361"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jpe8o"]
+friction = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nxogm"]
+size = Vector3(0.85, 0.7363281, 1.7)
+
+[node name="Car" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0, 0)
+mass = 500.0
+physics_material_override = SubResource("PhysicsMaterial_jpe8o")
+script = ExtResource("1_jpe8o")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)
+
+[node name="Camera" type="Camera3D" parent="CameraPivot" node_paths=PackedStringArray("camera_pos_a", "camera_pos_b")]
+transform = Transform3D(1, 1.4448608e-08, 5.21877e-10, -1.39698395e-08, 0.9563038, 0.29237172, 3.7252907e-09, -0.29237166, 0.95630366, 0, 1.1379347, 1.5907047)
+fov = 100.0
+script = ExtResource("1_52qhs")
+follow_speed = 5.0
+camera_pos_a = NodePath("../CameraPosA")
+camera_pos_b = NodePath("../CameraPosB")
+
+[node name="CameraPosA" type="Node3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7299994, 2.8999987)
+
+[node name="CameraPosB" type="Node3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.080513, 1.32)
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18144557, 0)
+shape = SubResource("BoxShape3D_nxogm")
+
+[node name="WheelFL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38028425, -0.20000002, -0.425)
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFL"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelFR" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.20000002, -0.425)
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelFR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelBL" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.20000002, 0.454)
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelBL"]
+transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelBR" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.20000002, 0.454)
+
+[node name="Mesh" type="MeshInstance3D" parent="WheelBR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="Mesh" parent="." instance=ExtResource("3_14wov")]
+transform = Transform3D(-0.15, 0, -2.2649372e-08, 0, 0.15, 0, 2.2649372e-08, 0, -0.15, 0, -0.31493473, 0.11352912)
+
+[node name="front right wheel" parent="Mesh" index="25"]
+visible = false
+
+[node name="rear wheels" parent="Mesh" index="29"]
+visible = false
+
+[node name="front left wheel" parent="Mesh" index="30"]
+visible = false
+
+[editable path="Mesh"]
