@@ -18,16 +18,16 @@ func _process(delta: float) -> void:
 	# (generally) facing where the car is facing
 	camera_pivot.global_rotation = Vector3(0, angle, 0)
 	
-	## speed fac
-	#var speed_fac = pow(min(car.linear_velocity.length() * 0.05, 1.0), 0.8)
-	#
-	## FOV (60 - 100)
-	#fov = 60 + speed_fac * 40
-	#
-	## position
-	#position = lerp(position, lerp(camera_pos_a.position, camera_pos_b.position, speed_fac), delta * 5)
-	#
-	## shake
-	#var shake = 0.02 * speed_fac * speed_fac
-	#h_offset = randf_range(-shake, shake)
-	#v_offset = randf_range(-shake, shake)
+	# speed fac
+	var speed_fac = pow(min(car.linear_velocity.length() * 0.05, 1.0), 0.8)
+	
+	# FOV (60 - 100)
+	fov = 60 + speed_fac * 40
+	
+	# position
+	position = lerp(position, lerp(camera_pos_a.position, camera_pos_b.position, speed_fac), delta * 5)
+	
+	# shake
+	var shake = 0.02 * speed_fac * speed_fac
+	h_offset = randf_range(-shake, shake)
+	v_offset = randf_range(-shake, shake)

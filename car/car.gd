@@ -11,6 +11,9 @@ func _process(_delta: float) -> void:
 	# oppose motion at the front and back of car
 	_oppose_at(Vector3.FORWARD)
 	_oppose_at(Vector3.BACK)
+	
+	# car lean
+	$Mesh.rotation.z = global_basis.x.dot(linear_velocity) * 0.01
 
 func _oppose_at(pos: Vector3):
 	

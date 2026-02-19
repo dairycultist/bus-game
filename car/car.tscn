@@ -8,8 +8,9 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jpe8o"]
 friction = 0.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_nxogm"]
-size = Vector3(0.85, 0.7363281, 1.7)
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jpe8o"]
+height = 1.0
+radius = 0.3
 
 [node name="Car" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0, 0)
@@ -35,40 +36,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7299994, 2.8999987)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.080513, 1.32)
 
 [node name="Collider" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18144557, 0)
-shape = SubResource("BoxShape3D_nxogm")
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.117959805, -0.6187616)
+shape = SubResource("CylinderShape3D_jpe8o")
 
-[node name="WheelFL" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38028425, -0.20000002, -0.425)
-
-[node name="Mesh" type="MeshInstance3D" parent="WheelFL"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_td361")
-skeleton = NodePath("")
-
-[node name="WheelFR" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.20000002, -0.425)
-
-[node name="Mesh" type="MeshInstance3D" parent="WheelFR"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_td361")
-skeleton = NodePath("")
-
-[node name="WheelBL" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38, -0.20000002, 0.454)
-
-[node name="Mesh" type="MeshInstance3D" parent="WheelBL"]
-transform = Transform3D(-1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_td361")
-skeleton = NodePath("")
-
-[node name="WheelBR" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.38, -0.20000002, 0.454)
-
-[node name="Mesh" type="MeshInstance3D" parent="WheelBR"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = ExtResource("3_td361")
-skeleton = NodePath("")
+[node name="Collider2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.117959805, 0.5852011)
+shape = SubResource("CylinderShape3D_jpe8o")
 
 [node name="Mesh" parent="." instance=ExtResource("3_14wov")]
 transform = Transform3D(-0.15, 0, -2.2649372e-08, 0, 0.15, 0, 2.2649372e-08, 0, -0.15, 0, -0.31493473, 0.11352912)
@@ -81,5 +54,25 @@ visible = false
 
 [node name="front left wheel" parent="Mesh" index="30"]
 visible = false
+
+[node name="WheelFL" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(6.666666, -5.828186e-07, 1.0066386e-06, -5.828186e-07, -6.666666, 0, 1.0066386e-06, -8.8003166e-14, -6.6666665, 2.5352275, 2.0995646, 3.5901945)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelFR" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-6.666666, 0, 1.0066386e-06, 0, 6.666666, 0, -1.0066386e-06, 0, -6.6666665, -2.5333335, 2.0995646, 3.5901935)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelBL" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(6.666666, -5.828186e-07, 1.0066386e-06, -5.828186e-07, -6.666666, 0, 1.0066386e-06, -8.8003166e-14, -6.6666665, 2.5333335, 2.0995646, -2.2698054)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
+
+[node name="WheelBR" type="MeshInstance3D" parent="Mesh"]
+transform = Transform3D(-6.666666, 0, 1.0066386e-06, 0, 6.666666, 0, -1.0066386e-06, 0, -6.6666665, -2.5333326, 2.0995646, -2.2698064)
+mesh = ExtResource("3_td361")
+skeleton = NodePath("")
 
 [editable path="Mesh"]
