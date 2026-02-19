@@ -13,7 +13,7 @@ func _process(_delta: float) -> void:
 	_oppose_at(Vector3.BACK)
 	
 	# car lean
-	$Mesh.rotation.z = global_basis.x.dot(linear_velocity) * 0.01
+	$Mesh.rotation.z = global_basis.x.dot(linear_velocity) * abs(global_basis.x.dot(linear_velocity)) * 0.003
 
 func _oppose_at(pos: Vector3):
 	
