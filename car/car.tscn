@@ -64,4 +64,7 @@ transform = Transform3D(-6.666666, 0, 1.0066386e-06, 0, 6.666666, 0, -1.0066386e
 mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
+[node name="GroundingRay" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.26, 0)
+
 [editable path="Mesh"]

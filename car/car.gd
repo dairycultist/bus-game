@@ -22,20 +22,22 @@ func _process(delta: float) -> void:
 	# (generally) facing where the car is facing
 	$CameraPivot.global_rotation = Vector3(0, angle, 0)
 	
-	# movement
-	var input = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
-	
-	apply_force(-global_basis.z * drive * input.y)
-	
-	apply_torque(-global_basis.y * steer * input.x * linear_velocity.dot(-global_basis.z))
-	
-	# oppose motion at the front and back of car
-	_oppose_at(Vector3.FORWARD)
-	_oppose_at(Vector3.BACK)
-	
-	# car lean
-	var sidevel := global_basis.x.dot(linear_velocity)
-	$Mesh.rotation.z = sidevel * abs(sidevel) * lean_amount
+	# movement if grounded
+	if $GroundingRay.is_colliding():
+		
+		var input = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
+		
+		apply_force(-global_basis.z * drive * input.y)
+		
+		apply_torque(-global_basis.y * steer * input.x * linear_velocity.dot(-global_basis.z))
+		
+		# oppose motion at the front and back of car
+		_oppose_at(Vector3.FORWARD)
+		_oppose_at(Vector3.BACK)
+		
+		# car lean
+		var sidevel := global_basis.x.dot(linear_velocity)
+		$Mesh.rotation.z = sidevel * abs(sidevel) * lean_amount
 
 func _oppose_at(pos: Vector3):
 	
