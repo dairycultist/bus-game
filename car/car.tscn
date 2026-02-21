@@ -75,4 +75,7 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.056277003, 0)
 target_position = Vector3(0, -0.26, 0)
 
+[node name="DropOffPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3671436, 0, -0.63910115)
+
 [editable path="Mesh"]

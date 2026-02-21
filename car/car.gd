@@ -10,14 +10,12 @@ extends RigidBody3D
 
 var angle := 0.0
 
-var _is_controlled: bool = false
+var _controlled_player: Player = null
 
 func on_interact(player: Player) -> void:
 	
-	player.reparent(self)
-	
 	# make the car controlled
-	_is_controlled = true
+	_controlled_player = player
 	$CameraPivot/Camera.current = true
 	
 	# make the player not controlled (also disabling them)
@@ -27,7 +25,7 @@ func on_interact(player: Player) -> void:
 
 func _process(delta: float) -> void:
 	
-	if _is_controlled:
+	if _controlled_player:
 		
 		# camera
 		angle = lerp_angle(angle, global_rotation.y, delta * 4.0)
@@ -39,7 +37,7 @@ func _process(delta: float) -> void:
 	# movement if grounded
 	if $GroundingRay.is_colliding():
 		
-		if _is_controlled:
+		if _controlled_player:
 			
 			var input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 			
@@ -50,10 +48,6 @@ func _process(delta: float) -> void:
 		# oppose motion at the front and back of car (emulates wheels not liking to move sideways)
 		_oppose_at(Vector3.FORWARD)
 		_oppose_at(Vector3.BACK)
-		
-		# car lean
-		#var sidevel := global_basis.x.dot(linear_velocity)
-		#$Mesh.rotation.z = sidevel * abs(sidevel) * lean_amount
 
 func _oppose_at(pos: Vector3):
 	
@@ -62,3 +56,18 @@ func _oppose_at(pos: Vector3):
 	var antislip = global_basis.x.dot(velocity_at_position) * grip
 	
 	apply_force(-global_basis.x * antislip, global_basis * pos)
+
+func _input(event):
+	
+	if _controlled_player and event.is_action_pressed("interact"):
+		
+		# make the player not controlled (also disabling them)
+		_controlled_player.set_controlled(true)
+		_controlled_player.global_position = $DropOffPoint.global_position
+		
+		# make player face in the same direction as the car for convenience
+		_controlled_player.rotation.y = angle
+		
+		# give up control
+		_controlled_player = null
+		$CameraPivot/Camera.current = false
