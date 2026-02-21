@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	# movement if grounded
 	if $GroundingRay.is_colliding():
 		
-		var input = Input.get_vector("ui_left", "ui_right", "ui_down", "ui_up")
+		var input = Input.get_vector("move_left", "move_right", "move_down", "move_up")
 		
 		apply_force(-global_basis.z * drive * input.y)
 		
