@@ -1,5 +1,8 @@
 extends RigidBody3D
 
+# TODO when the player on_interact-s with the car, parent the player to the car, disable the player,
+# and have the car "be" the player
+
 @export_group("Handling")
 @export var drive: float = 2000.0
 @export var steer: float = 200.0

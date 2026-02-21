@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=10 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
 [ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://car/car.tscn" id="3_u3cyc"]
-[ext_resource type="PackedScene" uid="uid://c68f5jmq4raxg" path="res://road.blend" id="4_m7jmp"]
+[ext_resource type="PackedScene" uid="uid://c68f5jmq4raxg" path="res://city.blend" id="4_m7jmp"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ulcgi"]
 
@@ -19,6 +19,9 @@ size = Vector3(6.25, 1, 2.92)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_u3cyc"]
 data = PackedVector3Array(-3.125, 0.5, 1.4599999, 3.125, 0.5, 1.4599999, -3.125, -0.5, 1.4599999, 3.125, 0.5, 1.4599999, 3.125, -0.5, 1.4599999, -3.125, -0.5, 1.4599999, 3.125, 0.5, -1.4599999, -3.125, 0.5, -1.4599999, 3.125, -0.5, -1.4599999, -3.125, 0.5, -1.4599999, -3.125, -0.5, -1.4599999, 3.125, -0.5, -1.4599999, 3.125, 0.5, 1.4599999, 3.125, 0.5, -1.4599999, 3.125, -0.5, 1.4599999, 3.125, 0.5, -1.4599999, 3.125, -0.5, -1.4599999, 3.125, -0.5, 1.4599999, -3.125, 0.5, -1.4599999, -3.125, 0.5, 1.4599999, -3.125, -0.5, -1.4599999, -3.125, 0.5, 1.4599999, -3.125, -0.5, 1.4599999, -3.125, -0.5, -1.4599999, 3.125, 0.5, 1.4599999, -3.125, 0.5, 1.4599999, 3.125, 0.5, -1.4599999, -3.125, 0.5, 1.4599999, -3.125, 0.5, -1.4599999, 3.125, 0.5, -1.4599999, -3.125, -0.5, 1.4599999, 3.125, -0.5, 1.4599999, -3.125, -0.5, -1.4599999, 3.125, -0.5, 1.4599999, 3.125, -0.5, -1.4599999, -3.125, -0.5, -1.4599999)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3253y"]
+font_size = 32
 
 [node name="Node3D" type="Node3D"]
 
@@ -39,16 +42,24 @@ material_override = SubResource("StandardMaterial3D_nxogm")
 mesh = SubResource("QuadMesh_drvgu")
 skeleton = NodePath("../..")
 
-[node name="road" parent="Floor" instance=ExtResource("4_m7jmp")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.71376, 0.023415923, -31.816973)
+[node name="City" parent="Floor" instance=ExtResource("4_m7jmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.023, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+[node name="Ramp" type="MeshInstance3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 0.9449489, -0.3272179, 0, 0.3272179, 0.9449489, 0, 0, -48.974228)
 mesh = SubResource("BoxMesh_3253y")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+[node name="RampCollider" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 0.9449489, -0.3272179, 0, 0.3272179, 0.9449489, 0, 0, -48.974228)
 shape = SubResource("ConcavePolygonShape3D_u3cyc")
 
 [node name="Car" parent="." instance=ExtResource("3_u3cyc")]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0.3505569, 0)
+
+[node name="Money" type="Label" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 170.0
+offset_bottom = 70.0
+text = "$500"
+label_settings = SubResource("LabelSettings_3253y")
