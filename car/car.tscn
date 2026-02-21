@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=6 format=3 uid="uid://dqs6dsg0ph3d"]
 
-[ext_resource type="Script" uid="uid://30j8l33d21i1" path="res://car/camera.gd" id="1_52qhs"]
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/car.gd" id="1_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://i08txglsg5wt" path="res://car/cartoon-car/source/ae86.fbx" id="3_14wov"]
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://car/wheel.obj" id="3_td361"]
@@ -21,19 +20,9 @@ script = ExtResource("1_jpe8o")
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)
 
-[node name="Camera" type="Camera3D" parent="CameraPivot" node_paths=PackedStringArray("camera_pos_a", "camera_pos_b")]
+[node name="Camera" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 1.4448608e-08, 5.21877e-10, -1.39698395e-08, 0.9563038, 0.29237172, 3.7252907e-09, -0.29237166, 0.95630366, 0, 1.1379347, 1.5907047)
 fov = 100.0
-script = ExtResource("1_52qhs")
-follow_speed = 5.0
-camera_pos_a = NodePath("../CameraPosA")
-camera_pos_b = NodePath("../CameraPosB")
-
-[node name="CameraPosA" type="Node3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7299994, 2.8999987)
-
-[node name="CameraPosB" type="Node3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.080513, 1.32)
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.117959805, -0.6187616)
