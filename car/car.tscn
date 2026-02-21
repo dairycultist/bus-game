@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=7 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/car.gd" id="1_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://i08txglsg5wt" path="res://car/cartoon-car/source/ae86.fbx" id="3_14wov"]
@@ -11,6 +11,9 @@ friction = 0.0
 height = 2.5
 radius = 0.8
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hkabp"]
+size = Vector3(1.366, 2.5, 4.589)
+
 [node name="Car" type="RigidBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 0, 0, 0)
 mass = 500.0
@@ -21,7 +24,7 @@ script = ExtResource("1_jpe8o")
 transform = Transform3D(1, 0, 0, 0, 1.0000004, 0, 0, 0, 1.0000004, 0, 0, 0)
 
 [node name="Camera" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 1.4448608e-08, 5.21877e-10, -1.39698395e-08, 0.9563038, 0.29237172, 3.7252907e-09, -0.29237166, 0.95630366, 0, 1.1379347, 1.5907047)
+transform = Transform3D(1, 1.4448608e-08, 5.21877e-10, -1.39698395e-08, 0.9563038, 0.29237172, 3.7252907e-09, -0.29237166, 0.95630366, 0, 2.959, 4.137)
 fov = 100.0
 
 [node name="Collider" type="CollisionShape3D" parent="."]
@@ -31,6 +34,10 @@ shape = SubResource("CylinderShape3D_jpe8o")
 [node name="Collider2" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0.795, 1.4059176)
 shape = SubResource("CylinderShape3D_jpe8o")
+
+[node name="Collider3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -8.001126e-09, 1.4278889, -0.2294121)
+shape = SubResource("BoxShape3D_hkabp")
 
 [node name="Mesh" parent="." instance=ExtResource("3_14wov")]
 transform = Transform3D(-0.4, 0, -6.039832e-08, 0, 0.4, 0, 6.039832e-08, 0, -0.4, 0, -0.31493473, 0.11352912)
@@ -65,6 +72,7 @@ mesh = ExtResource("3_td361")
 skeleton = NodePath("")
 
 [node name="GroundingRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.056277003, 0)
 target_position = Vector3(0, -0.26, 0)
 
 [editable path="Mesh"]

@@ -1,46 +1,59 @@
 extends RigidBody3D
 
-# TODO when the player on_interact-s with the car, parent the player to the car, disable the player,
-# and have the car "be" the player
-
 @export_group("Handling")
 @export var drive: float = 2000.0
 @export var steer: float = 200.0
 @export var grip:  float = 500.0
-
-@export_group("VFX")
-@export var lean_amount: float  = 0.0005
 
 @export_group("Camera")
 @export var follow_speed: float = 10.0
 
 var angle := 0.0
 
+var _is_controlled: bool = false
+
+func on_interact(player: Player) -> void:
+	
+	player.reparent(self)
+	
+	# make the car controlled
+	_is_controlled = true
+	$CameraPivot/Camera.current = true
+	
+	# make the player not controlled (also disabling them)
+	player.set_controlled(false)
+	
+	player.global_position.y = 100
+
 func _process(delta: float) -> void:
 	
-	# camera
-	angle = lerp_angle(angle, global_rotation.y, delta * 4.0)
-	
-	# ensure camera is always above the car (even if tipped over) and
-	# (generally) facing where the car is facing
-	$CameraPivot.global_rotation = Vector3(0, angle, 0)
+	if _is_controlled:
+		
+		# camera
+		angle = lerp_angle(angle, global_rotation.y, delta * 4.0)
+		
+		# ensure camera is always above the car (even if tipped over) and
+		# (generally) facing where the car is facing
+		$CameraPivot.global_rotation = Vector3(0, angle, 0)
 	
 	# movement if grounded
 	if $GroundingRay.is_colliding():
 		
-		var input = Input.get_vector("move_left", "move_right", "move_down", "move_up")
-		
-		apply_force(-global_basis.z * drive * input.y)
-		
-		apply_torque(-global_basis.y * steer * input.x * linear_velocity.dot(-global_basis.z))
-		
-		# oppose motion at the front and back of car
+		if _is_controlled:
+			
+			var input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+			
+			apply_force(global_basis.z * drive * input.y)
+			
+			apply_torque(-global_basis.y * steer * input.x * linear_velocity.dot(-global_basis.z))
+			
+		# oppose motion at the front and back of car (emulates wheels not liking to move sideways)
 		_oppose_at(Vector3.FORWARD)
 		_oppose_at(Vector3.BACK)
 		
 		# car lean
-		var sidevel := global_basis.x.dot(linear_velocity)
-		$Mesh.rotation.z = sidevel * abs(sidevel) * lean_amount
+		#var sidevel := global_basis.x.dot(linear_velocity)
+		#$Mesh.rotation.z = sidevel * abs(sidevel) * lean_amount
 
 func _oppose_at(pos: Vector3):
 	

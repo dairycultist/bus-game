@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 @export_group("Camera")
 @export var mouse_sensitivity: float = 0.3
@@ -9,15 +10,25 @@ var camera_pitch := 0.0
 @export_group("Movement")
 @export var ground_accel: float = 25
 @export var air_accel: float    = 10
-@export var max_speed: float  = 5
-@export var drag: float       = 8
-@export var jump_speed: float = 8
-@export var gravity: float    = 25
+@export var max_speed: float    = 5
+@export var drag: float         = 8
+@export var jump_speed: float   = 8
+@export var gravity: float      = 25
+
+var _is_controlled: bool = true
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
+func set_controlled(value: bool):
+	_is_controlled = value
+	$CameraPivot/Camera.current = value
+	visible = value
+
 func _process(delta: float) -> void:
+	
+	if not _is_controlled:
+		return
 	
 	# input
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -34,7 +45,15 @@ func _process(delta: float) -> void:
 		else:
 			velocity += direction * air_accel * delta
 		
-		limit_speed()
+		# limit speed
+		var vel2d := Vector2(velocity.x, velocity.z)
+
+		if (vel2d.length() > max_speed):
+			
+			vel2d = vel2d.normalized() * max_speed
+			
+			velocity.x = vel2d.x
+			velocity.z = vel2d.y
 	
 	elif is_on_floor():
 		
@@ -50,25 +69,14 @@ func _process(delta: float) -> void:
 	move_and_slide()
 	
 	# place camera
-	var query = PhysicsRayQueryParameters3D.create($CameraAnchor.global_position, $CameraAnchor.global_position + max_camera_distance * $CameraAnchor.global_transform.basis.z)
+	var query = PhysicsRayQueryParameters3D.create($CameraPivot.global_position, $CameraPivot.global_position + max_camera_distance * $CameraPivot.global_transform.basis.z)
 	query.exclude = [get_rid()]
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 	
 	if (result):
-		$CameraAnchor/Camera3D.global_position = result.position
+		$CameraPivot/Camera.global_position = result.position
 	else:
-		$CameraAnchor/Camera3D.global_position = $CameraAnchor.global_position + max_camera_distance * $CameraAnchor.global_transform.basis.z
-
-func limit_speed():
-	
-	var vel2d := Vector2(velocity.x, velocity.z)
-
-	if (vel2d.length() > max_speed):
-		
-		vel2d = vel2d.normalized() * max_speed
-		
-		velocity.x = vel2d.x
-		velocity.z = vel2d.y
+		$CameraPivot/Camera.global_position = $CameraPivot.global_position + max_camera_distance * $CameraPivot.global_transform.basis.z
 
 func _input(event):
 	
@@ -79,7 +87,17 @@ func _input(event):
 		else:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	# stuff above can be done even in a car
+	elif not _is_controlled:
+		return
+	
+	elif event.is_action_pressed("interact"):
+		
+		if $CameraPivot/InteractRay.is_colliding():
+			if $CameraPivot/InteractRay.get_collider().has_method("on_interact"):
+				$CameraPivot/InteractRay.get_collider().on_interact(self)
+	
+	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		
 		var rotation_angle := deg_to_rad(-event.relative.x * mouse_sensitivity)
 		
@@ -87,4 +105,4 @@ func _input(event):
 		
 		camera_pitch = clampf(camera_pitch - event.relative.y * mouse_sensitivity, -90, 90)
 		
-		$CameraAnchor.rotation.x = deg_to_rad(camera_pitch)
+		$CameraPivot.rotation.x = deg_to_rad(camera_pitch)

@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=11 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Texture2D" uid="uid://cehhwh13iv1au" path="res://debug.png" id="1_ulcgi"]
-[ext_resource type="Script" uid="uid://ct5jpxu7wo0b2" path="res://player/player.gd" id="3_3253y"]
-[ext_resource type="PackedScene" uid="uid://i08txglsg5wt" path="res://car/cartoon-car/source/ae86.fbx" id="3_u3cyc"]
 [ext_resource type="PackedScene" uid="uid://c68f5jmq4raxg" path="res://city.blend" id="4_m7jmp"]
+[ext_resource type="PackedScene" uid="uid://cm5ptvljnq6al" path="res://player/player.tscn" id="4_u3cyc"]
+[ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://car/car.tscn" id="4_y2354"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ulcgi"]
 
@@ -23,10 +23,6 @@ data = PackedVector3Array(-3.125, 0.5, 1.4599999, 3.125, 0.5, 1.4599999, -3.125,
 
 [sub_resource type="LabelSettings" id="LabelSettings_3253y"]
 font_size = 32
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nxogm"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_nxogm"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -58,9 +54,6 @@ mesh = SubResource("BoxMesh_3253y")
 transform = Transform3D(1, 0, 0, 0, 0.9449489, -0.3272179, 0, 0.3272179, 0.9449489, 0, 0, -48.974228)
 shape = SubResource("ConcavePolygonShape3D_u3cyc")
 
-[node name="ae86" parent="Floor" instance=ExtResource("3_u3cyc")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 1, -0.44157296, 0)
-
 [node name="Money" type="Label" parent="."]
 offset_left = 10.0
 offset_top = 10.0
@@ -69,18 +62,9 @@ offset_bottom = 70.0
 text = "$500"
 label_settings = SubResource("LabelSettings_3253y")
 
-[node name="Player" type="CharacterBody3D" parent="."]
-script = ExtResource("3_3253y")
+[node name="Player" parent="." instance=ExtResource("4_u3cyc")]
 
-[node name="CameraAnchor" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/CameraAnchor"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_nxogm")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_nxogm")
+[node name="Car" parent="." instance=ExtResource("4_y2354")]
+transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 5, 0, 0)
+drive = 2500.0
+steer = 350.0
