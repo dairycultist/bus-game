@@ -73,7 +73,7 @@ skeleton = NodePath("")
 
 [node name="GroundingRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.58489335, 0)
-target_position = Vector3(0, -0.4, 0)
+target_position = Vector3(0, -0.8, 0)
 
 [node name="DropOffPoint" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.3671436, -0.6411704, -0.63910115)
