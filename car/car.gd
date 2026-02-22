@@ -48,6 +48,12 @@ func _process(delta: float) -> void:
 		# oppose motion at the front and back of car (emulates wheels not liking to move sideways)
 		_oppose_at(Vector3.FORWARD)
 		_oppose_at(Vector3.BACK)
+	
+		physics_material_override.friction = 0.0
+	
+	else:
+		
+		physics_material_override.friction = 1.0
 
 func _oppose_at(pos: Vector3):
 	
