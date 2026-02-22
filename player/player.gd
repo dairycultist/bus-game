@@ -24,6 +24,7 @@ func set_controlled(value: bool):
 	_is_controlled = value
 	$CameraPivot/Camera.current = value
 	visible = value
+	$Crosshair.visible = value
 
 func _process(delta: float) -> void:
 	
