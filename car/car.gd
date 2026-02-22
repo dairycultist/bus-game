@@ -17,6 +17,7 @@ func on_interact(player: Player) -> void:
 	# make the car controlled
 	_controlled_player = player
 	$CameraPivot/Camera.current = true
+	angle = global_rotation.y
 	
 	# make the player not controlled (also disabling them)
 	player.set_controlled(false)
