@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c2rs77arqpsyw"
-path="res://.godot/imported/palmgameready.fbx-2689b8ba0caf4dddc708d90177a90508.scn"
+path="res://.godot/imported/palmgameready.fbx-42a96caccfd4693f41f59beddad06707.scn"
 
 [deps]
 
-source_file="res://palmtree/palmgameready.fbx"
-dest_files=["res://.godot/imported/palmgameready.fbx-2689b8ba0caf4dddc708d90177a90508.scn"]
+source_file="res://world/palmtree/palmgameready.fbx"
+dest_files=["res://.godot/imported/palmgameready.fbx-42a96caccfd4693f41f59beddad06707.scn"]
 
 [params]
 

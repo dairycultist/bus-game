@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c70my5cdg68h6"
-path.s3tc="res://.godot/imported/coconut.png-cdbf810e1d1bd8548cbf794ef2961111.s3tc.ctex"
+uid="uid://cjkpyd45t2bhw"
+path.s3tc="res://.godot/imported/brick.png-04f85bf63f7ff25e8d1f7ceeda442086.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://palmtree/coconut.png"
-dest_files=["res://.godot/imported/coconut.png-cdbf810e1d1bd8548cbf794ef2961111.s3tc.ctex"]
+source_file="res://world/buildings/brick.png"
+dest_files=["res://.godot/imported/brick.png-04f85bf63f7ff25e8d1f7ceeda442086.s3tc.ctex"]
 
 [params]
 

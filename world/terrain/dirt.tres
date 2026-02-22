@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dmbasmn13dahh"]
 
-[ext_resource type="Texture2D" uid="uid://blpm5aiul2ja1" path="res://world/dirt.png" id="1_05lc2"]
+[ext_resource type="Texture2D" uid="uid://blpm5aiul2ja1" path="res://world/terrain/dirt.png" id="1_05lc2"]
 
 [resource]
 albedo_color = Color(0.5790201, 0.57902014, 0.57902014, 1)
