@@ -129,7 +129,7 @@ transform = Transform3D(2.6666667, 0, 0, 0, 2.6666667, 0, 0, 0, 2.6666667, 0, -2
 shape = SubResource("ConcavePolygonShape3D_5juve")
 
 [node name="building" parent="Floor" instance=ExtResource("8_xlvrw")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10541, -2.2880816, 5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.10541, -2.749564, 5)
 
 [node name="Stoves" type="MeshInstance3D" parent="Floor/building"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9225626, 1.6014075, -3.1643143)
@@ -177,9 +177,9 @@ label_settings = SubResource("LabelSettings_3253y")
 
 [node name="Car" parent="." instance=ExtResource("4_y2354")]
 transform = Transform3D(1, 0, 0, 0, 1.0000006, 0, 0, 0, 1.0000007, 5, 0.9794545, 0)
-drive = 3000.0
-steer = 350.0
-grip = 300.0
+drive = 4000.0
+steer = 500.0
+grip = 200.0
 
 [editable path="PalmTree"]
 [editable path="Floor/building"]

@@ -45,12 +45,19 @@ func _process(delta: float) -> void:
 			apply_force(global_basis.z * drive * input.y)
 			
 			apply_torque(-global_basis.y * steer * input.x * linear_velocity.dot(-global_basis.z))
+		
+			if input:
+				physics_material_override.friction = 0.0
+			else:	
+				physics_material_override.friction = lerp(physics_material_override.friction, 1.0, delta)
+		
+		else:
+			
+			physics_material_override.friction = lerp(physics_material_override.friction, 1.0, delta)
 			
 		# oppose motion at the front and back of car (emulates wheels not liking to move sideways)
 		_oppose_at(Vector3.FORWARD)
 		_oppose_at(Vector3.BACK)
-	
-		physics_material_override.friction = 0.0
 	
 	else:
 		
@@ -60,15 +67,15 @@ func _oppose_at(pos: Vector3):
 	
 	var velocity_at_position := linear_velocity + angular_velocity.cross(global_basis * pos)
 	
-	var antislip = global_basis.x.dot(velocity_at_position) * grip
+	var slip = global_basis.x.dot(velocity_at_position)
 	
-	apply_force(-global_basis.x * antislip, global_basis * pos)
+	apply_force(-global_basis.x * slip * grip, global_basis * pos)
 
 func _input(event):
 	
 	if _controlled_player and event.is_action_pressed("interact"):
 		
-		# make the player not controlled (also disabling them)
+		# make the player controlled
 		_controlled_player.set_controlled(true)
 		_controlled_player.global_position = $DropOffPoint.global_position
 		
