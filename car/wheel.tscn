@@ -10,7 +10,7 @@ script = ExtResource("1_03cat")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5458543, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="WheelContact"]
-transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1944985, 0)
+transform = Transform3D(1, 0, 0, 0, -1, -1.509958e-07, 0, 1.509958e-07, -1, 0, 1.1944985, 0)
 mesh = ExtResource("2_noiue")
 skeleton = NodePath("../../..")
 
