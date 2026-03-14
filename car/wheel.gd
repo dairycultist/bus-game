@@ -1,8 +1,9 @@
 extends Node3D
 
 @export var flip_mesh: bool
-@export var stiffness: float = 30.0
-@export var dampening: float = 30.0
+@export var stiffness: float = 3000.0
+@export var dampening: float = 300.0
+@export var grip: float = 300.0
 
 @onready var body: RigidBody3D = get_parent()
 
@@ -39,13 +40,17 @@ func _physics_process(_delta: float) -> void:
 	body.apply_force(-vertical_velocity_at_origin * dampening, global_position - body.global_position)
 	
 	# velocity at the point of contact agnostic to the rotation of the wheel
-	#var body_velocity_at_contact: Vector3 = body.linear_velocity + body.angular_velocity.cross($WheelContact.global_position - body.global_position)
+	var body_velocity_at_contact: Vector3 = body.linear_velocity + body.angular_velocity.cross($WheelContact.global_position - body.global_position)
 	
 	# velocity of the wheel at the point of contact agnostic to the car body
-	#var wheel_velocity_at_contact: Vector3 = angular_speed * wheel_radius * -$WheelContact.global_basis.z
-	
-	# apply force to coax wheel into not slipping
-	# (when wheel is spinning, this will both account for drive and antislip)
-	# (might also want to be able to have velocity_at_contact influence angular_speed, idk)
+	var wheel_velocity_at_contact: Vector3 = angular_speed * wheel_radius * -$WheelContact.global_basis.z
 	
 	# when there is no slip, body_velocity_at_contact = -wheel_velocity_at_contact
+	var slip = body_velocity_at_contact - wheel_velocity_at_contact
+	
+	# reduce slip in two ways (accounts for both drive and antislip):
+	
+	# slip influences angular_speed
+	
+	# slip influences velocity (via frictional force)
+	body.apply_force(-slip * grip, $WheelContact.global_position - body.global_position)
