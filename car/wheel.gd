@@ -31,18 +31,18 @@ func _physics_process(_delta: float) -> void:
 	# resist compression
 	var compression_fac: float = 1.0 - $ContactRay.global_position.distance_to($ContactRay.get_collision_point()) / $ContactRay.target_position.length()
 	
-	body.apply_force(global_basis.y * compression_fac * stiffness, global_position)
+	body.apply_force(global_basis.y * compression_fac * stiffness, global_position - body.global_position)
 	
-	# resist velocity
-	var velocity_at_origin: Vector3 = body.linear_velocity + body.angular_velocity.cross(global_position - body.global_position)
+	# resist vertical velocity
+	var vertical_velocity_at_origin: Vector3 = global_basis.y * global_basis.y.dot(body.linear_velocity + body.angular_velocity.cross(global_position - body.global_position))
 	
-	body.apply_force(-velocity_at_origin * dampening, global_position)
+	body.apply_force(-vertical_velocity_at_origin * dampening, global_position - body.global_position)
 	
 	# velocity at the point of contact agnostic to the rotation of the wheel
-	var body_velocity_at_contact: Vector3 = body.linear_velocity + body.angular_velocity.cross($WheelContact.global_position - body.global_position)
+	#var body_velocity_at_contact: Vector3 = body.linear_velocity + body.angular_velocity.cross($WheelContact.global_position - body.global_position)
 	
 	# velocity of the wheel at the point of contact agnostic to the car body
-	var wheel_velocity_at_contact: Vector3 = angular_speed * wheel_radius * -$WheelContact.global_basis.z
+	#var wheel_velocity_at_contact: Vector3 = angular_speed * wheel_radius * -$WheelContact.global_basis.z
 	
 	# apply force to coax wheel into not slipping
 	# (when wheel is spinning, this will both account for drive and antislip)
