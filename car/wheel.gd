@@ -4,6 +4,7 @@ extends Node3D
 @export var stiffness: float = 3000.0
 @export var dampening: float = 300.0
 @export var grip: float = 300.0
+@export var steer_angle: float = 0.0
 
 @onready var body: RigidBody3D = get_parent()
 
@@ -27,6 +28,21 @@ func _process(delta: float) -> void:
 	
 	# visually rotate wheel
 	$WheelContact/Mesh.rotation.x -= angular_speed * delta
+	
+	# input
+	if Input.is_action_pressed("move_up"):
+		angular_speed = lerp(angular_speed, 5.0, delta)
+	elif Input.is_action_pressed("move_down"):
+		angular_speed = lerp(angular_speed, -5.0, delta)
+	else:
+		angular_speed = lerp(angular_speed, 0.0, delta)
+	
+	if Input.is_action_pressed("move_left"):
+		$WheelContact.rotation.y = lerp_angle($WheelContact.rotation.y, deg_to_rad(steer_angle), delta)
+	elif Input.is_action_pressed("move_right"):
+		$WheelContact.rotation.y = lerp_angle($WheelContact.rotation.y, -deg_to_rad(steer_angle), delta)
+	else:
+		$WheelContact.rotation.y = lerp_angle($WheelContact.rotation.y, 0.0, delta)
 
 func _physics_process(_delta: float) -> void:
 	
