@@ -8,7 +8,7 @@ extends Node3D
 @onready var body: RigidBody3D = get_parent()
 
 var wheel_radius: float
-var angular_speed: float
+var angular_speed: float = 1.0
 
 func _ready() -> void:
 	
@@ -17,12 +17,16 @@ func _ready() -> void:
 	
 	wheel_radius = $WheelContact/Mesh.position.y
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	
+	# visually place wheel
 	$WheelContact.global_position =\
 		$ContactRay.get_collision_point()\
 		if $ContactRay.is_colliding()\
 		else $ContactRay.to_global($ContactRay.target_position)
+	
+	# visually rotate wheel
+	$WheelContact/Mesh.rotation.x -= angular_speed * delta
 
 func _physics_process(_delta: float) -> void:
 	
@@ -50,7 +54,7 @@ func _physics_process(_delta: float) -> void:
 	
 	# reduce slip in two ways (accounts for both drive and antislip):
 	
-	# slip influences angular_speed
+	# slip influences angular_speed (only if in neutral)
 	
 	# slip influences velocity (via frictional force)
 	body.apply_force(-slip * grip, $WheelContact.global_position - body.global_position)
