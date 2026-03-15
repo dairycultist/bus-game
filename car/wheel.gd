@@ -53,19 +53,17 @@ func _process(delta: float) -> void:
 	else:
 		$WheelContact.rotation.y = lerp_angle($WheelContact.rotation.y, 0.0, steer_speed * delta)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	if not $ContactRay.is_colliding():
 		return
 	
 	# resist compression
 	var compression_fac: float = 1.0 - $ContactRay.global_position.distance_to($ContactRay.get_collision_point()) / $ContactRay.target_position.length()
-	
 	body.apply_force(global_basis.y * compression_fac * stiffness, global_position - body.global_position)
 	
 	# resist vertical velocity
 	var vertical_velocity_at_origin: Vector3 = global_basis.y * global_basis.y.dot(body.linear_velocity + body.angular_velocity.cross(global_position - body.global_position))
-	
 	body.apply_force(-vertical_velocity_at_origin * dampening, global_position - body.global_position)
 	
 	# velocity at the point of contact agnostic to the rotation of the wheel
@@ -75,11 +73,17 @@ func _physics_process(_delta: float) -> void:
 	var wheel_velocity_at_contact: Vector3 = angular_speed * wheel_radius * -$WheelContact.global_basis.z
 	
 	# when there is no slip, body_velocity_at_contact = -wheel_velocity_at_contact
-	var slip = body_velocity_at_contact - wheel_velocity_at_contact
+	var slip := body_velocity_at_contact - wheel_velocity_at_contact
 	
 	# reduce slip in two ways (accounts for both drive and antislip):
 	
-	# slip influences angular_speed (only if in neutral)
+	# slip influences angular_speed (only if in neutral/unpowered -- powered
+	# wheels for now brake when not inputing, not neutral)
+	if not powered:
+		
+		var forward_slip := slip.dot(-$WheelContact.global_basis.z)
+		
+		angular_speed += forward_slip / wheel_radius * 6.0 * delta # TODO hardcoding bad
 	
 	# slip influences velocity (via frictional force)
 	body.apply_force(-slip * grip, $WheelContact.global_position - body.global_position)
