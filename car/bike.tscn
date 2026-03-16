@@ -31,9 +31,10 @@ size = Vector3(1, 2.09, 5.14)
 
 [node name="Bike" type="Node3D"]
 script = ExtResource("1_72ido")
+stiffness = 20000.0
 
 [node name="FrontWheel" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.0005946, -2.2791686)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.373, -2.9)
 collision_layer = 2
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -41,6 +42,9 @@ axis_lock_angular_z = true
 mass = 10.0
 physics_material_override = SubResource("PhysicsMaterial_a7727")
 can_sleep = false
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
 
 [node name="Collider" type="CollisionShape3D" parent="FrontWheel"]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
@@ -56,6 +60,9 @@ mesh = SubResource("BoxMesh_03cat")
 
 [node name="Chassis" type="RigidBody3D" parent="."]
 collision_layer = 2
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 mass = 250.0
 physics_material_override = SubResource("PhysicsMaterial_dxy33")
 can_sleep = false
@@ -74,6 +81,10 @@ curve = SubResource("Curve3D_dxy33")
 [node name="Collider" type="CollisionShape3D" parent="Chassis"]
 transform = Transform3D(1, 0, 0, 0, 0.9739206, -0.22688927, 0, 0.22688927, 0.9739206, 0, 0.9149704, 0)
 shape = SubResource("BoxShape3D_dxy33")
+
+[node name="Collider2" type="CollisionShape3D" parent="Chassis"]
+transform = Transform3D(-4.371139e-08, -1, 0, 0.99999994, -4.3711385e-08, 0, 0, 0, 0.99999994, 0, 0.44, -2.57)
+shape = SubResource("CylinderShape3D_hkabp")
 
 [node name="Mesh" type="MeshInstance3D" parent="Chassis"]
 transform = Transform3D(1, 0, 0, 0, 0.9739206, -0.22688928, 0, 0.22688928, 0.9739206, 0, 0.9149704, 0)

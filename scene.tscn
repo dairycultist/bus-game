@@ -20,7 +20,6 @@ shadow_opacity = 0.6
 shadow_blur = 2.113
 
 [node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 material_override = ExtResource("1_73fnb")
@@ -29,5 +28,5 @@ mesh = SubResource("PlaneMesh_5juve")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("WorldBoundaryShape3D_73fnb")
 
-[node name="Car" parent="." instance=ExtResource("2_nxogm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16.878262, 0)
+[node name="Bike" parent="." instance=ExtResource("2_nxogm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
