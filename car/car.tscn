@@ -1,17 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=9 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/car.gd" id="1_72ido"]
-[ext_resource type="Script" uid="uid://5uyoirgdidbq" path="res://car/wheel.gd" id="2_hkabp"]
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://car/wheel.obj" id="3_jpe8o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_73fnb"]
 friction = 0.0
-
-[sub_resource type="BoxMesh" id="BoxMesh_dxy33"]
-size = Vector3(1, 2.09, 5.14)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dxy33"]
-size = Vector3(1, 2.09, 5.14)
 
 [sub_resource type="Curve3D" id="Curve3D_dxy33"]
 _data = {
@@ -20,18 +13,41 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="BoxMesh" id="BoxMesh_03cat"]
-size = Vector3(1.66, 1, 1)
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_hkabp"]
 height = 0.6
 radius = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_03cat"]
+size = Vector3(1.66, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dxy33"]
+size = Vector3(1, 2.09, 5.14)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dxy33"]
+size = Vector3(1, 2.09, 5.14)
 
 [node name="Car" type="RigidBody3D"]
 collision_layer = 2
 mass = 250.0
 physics_material_override = SubResource("PhysicsMaterial_73fnb")
+contact_monitor = true
+max_contacts_reported = 2
 script = ExtResource("1_72ido")
+
+[node name="FrontSuspension" type="Path3D" parent="."]
+curve = SubResource("Curve3D_dxy33")
+
+[node name="FrontWheel" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -2.1910696, -3.5493355)
+shape = SubResource("CylinderShape3D_hkabp")
+
+[node name="Mesh" type="MeshInstance3D" parent="FrontWheel"]
+transform = Transform3D(2.1855694e-08, 1, 8.742278e-08, 0.5, -4.371139e-08, 0, 1.9106855e-15, 8.742278e-08, -1, 0, 0, 0)
+mesh = ExtResource("3_jpe8o")
+skeleton = NodePath("../..")
+
+[node name="TEMP" type="MeshInstance3D" parent="FrontWheel/Mesh"]
+mesh = SubResource("BoxMesh_03cat")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9739206, -0.22688928, 0, 0.22688928, 0.9739206, 0, 0.9149704, 0)
@@ -48,21 +64,4 @@ current = true
 [node name="Camera2" type="Camera3D" parent="."]
 transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -13.411793, 3.6758423, 5.7761383)
 
-[node name="Suspension" type="Path3D" parent="."]
-curve = SubResource("Curve3D_dxy33")
-script = ExtResource("2_hkabp")
-
-[node name="Wheel" type="Area3D" parent="Suspension"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1910696, -3.5493355)
-
-[node name="Mesh" type="MeshInstance3D" parent="Suspension/Wheel"]
-transform = Transform3D(-0.5, 0, -3.821371e-15, 0, 1, 8.742278e-08, 1.9106855e-15, 8.742278e-08, -1, 0, 0, 0)
-mesh = ExtResource("3_jpe8o")
-skeleton = NodePath("../../..")
-
-[node name="TEMP" type="MeshInstance3D" parent="Suspension/Wheel/Mesh"]
-mesh = SubResource("BoxMesh_03cat")
-
-[node name="Collider" type="CollisionShape3D" parent="Suspension/Wheel"]
-transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("CylinderShape3D_hkabp")
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

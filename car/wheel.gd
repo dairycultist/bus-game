@@ -13,9 +13,6 @@ var angular_speed: float = 1.0
 
 func _process(delta: float) -> void:
 	
-	# visually place wheel
-	$Wheel.global_position = to_global(curve.sample(0, abs(sin(Time.get_ticks_msec() * 0.001))))
-	
 	# visually rotate wheel
 	$Wheel/Mesh.rotation.x -= angular_speed * delta
 	
