@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://wy54h3reeml3"
+path="res://.godot/imported/bikeframe.obj-2e8e19dc02f846541f906f803d061994.mesh"
+
+[deps]
+
+files=["res://.godot/imported/bikeframe.obj-2e8e19dc02f846541f906f803d061994.mesh"]
+
+source_file="res://car/bikeframe.obj"
+dest_files=["res://.godot/imported/bikeframe.obj-2e8e19dc02f846541f906f803d061994.mesh", "res://.godot/imported/bikeframe.obj-2e8e19dc02f846541f906f803d061994.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(6, 6, 6)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
