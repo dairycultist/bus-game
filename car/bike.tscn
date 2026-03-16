@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dqs6dsg0ph3d"]
+
+[ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/bike.gd" id="1_72ido"]
+[ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://car/wheel.obj" id="3_jpe8o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a7727"]
+friction = 0.0
+bounce = 0.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hkabp"]
+height = 0.6
+radius = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_03cat"]
+size = Vector3(1.66, 1, 1)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dxy33"]
+
+[sub_resource type="Curve3D" id="Curve3D_dxy33"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, -0.373, -2.9, 0, 0, 0, 0, 0, 0, 0, 0.44, -2.57),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dxy33"]
+size = Vector3(1, 2.09, 5.14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dxy33"]
+size = Vector3(1, 2.09, 5.14)
+
+[node name="Bike" type="Node3D"]
+script = ExtResource("1_72ido")
+
+[node name="FrontWheel" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.0005946, -2.2791686)
+collision_layer = 2
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 10.0
+physics_material_override = SubResource("PhysicsMaterial_a7727")
+can_sleep = false
+
+[node name="Collider" type="CollisionShape3D" parent="FrontWheel"]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_hkabp")
+
+[node name="Mesh" type="MeshInstance3D" parent="FrontWheel"]
+transform = Transform3D(-0.5, 0, -3.821371e-15, 0, 1, 8.742278e-08, 1.9106855e-15, 8.742278e-08, -1, 0, 0, 0)
+mesh = ExtResource("3_jpe8o")
+skeleton = NodePath("../../Chassis")
+
+[node name="TEMP" type="MeshInstance3D" parent="FrontWheel/Mesh"]
+mesh = SubResource("BoxMesh_03cat")
+
+[node name="Chassis" type="RigidBody3D" parent="."]
+collision_layer = 2
+mass = 250.0
+physics_material_override = SubResource("PhysicsMaterial_dxy33")
+can_sleep = false
+max_contacts_reported = 2
+
+[node name="Camera1" type="Camera3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 0.9848078, 0.1736482, 0, -0.1736482, 0.9848078, 0, 5.486, 14.427)
+current = true
+
+[node name="Camera2" type="Camera3D" parent="Chassis"]
+transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -13.411793, 3.6758423, 5.7761383)
+
+[node name="FrontSuspension" type="Path3D" parent="Chassis"]
+curve = SubResource("Curve3D_dxy33")
+
+[node name="Collider" type="CollisionShape3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 0.9739206, -0.22688927, 0, 0.22688927, 0.9739206, 0, 0.9149704, 0)
+shape = SubResource("BoxShape3D_dxy33")
+
+[node name="Mesh" type="MeshInstance3D" parent="Chassis"]
+transform = Transform3D(1, 0, 0, 0, 0.9739206, -0.22688928, 0, 0.22688928, 0.9739206, 0, 0.9149704, 0)
+mesh = SubResource("BoxMesh_dxy33")
