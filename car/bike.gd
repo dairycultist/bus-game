@@ -29,15 +29,24 @@ func _process(delta: float) -> void:
 	var move := -Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if move.y == 0.0:
+		
 		move.y = -sign(speed)
 	
+		if abs(speed) < 0.5:
+			move.x = 0.0 # can't turn if not moving
+			speed = 0.0  # prevent weird float stuff
+	
 	if move.x == 0.0:
+		
 		move.x = -sign(turn_speed)
+		
+		if abs(turn_speed) < 0.5:
+			turn_speed = 0.0 # prevent weird float stuff
 	
 	# move wheels based on speed
 	var angular_speed = velocity.dot(-global_basis.z) / wheel_mesh_radius * delta
-	$Mesh/FrontWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
-	$Mesh/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
+	$BikeModel/FrontWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
+	$BikeModel/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
 	
 	# accelerate
 	var accelerate_y = speed
@@ -49,13 +58,17 @@ func _process(delta: float) -> void:
 	accelerate_y = -sign(accelerate_y - speed)
 	
 	# turn
-	turn_speed += move.x * turn_acceleration * delta * sign(speed)
+	turn_speed += move.x * turn_acceleration * delta
 	turn_speed = clamp(turn_speed, -max_turn_speed, max_turn_speed)
 	global_rotation.y += turn_speed * delta
 	
 	# lean based on acceleration
-	$Mesh.rotation.x = lerp_angle($Mesh.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
-	$Mesh.rotation.y = lerp_angle($Mesh.rotation.z, turn_speed * sign(speed) * yaw_intensity, 1.5 * delta)
-	$Mesh.rotation.z = lerp_angle($Mesh.rotation.z, turn_speed * sign(speed) * roll_intensity, 1.5 * delta)
+	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
+	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.z, turn_speed * sign(speed) * yaw_intensity, 1.5 * delta)
+	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * sign(speed) * roll_intensity, 1.5 * delta)
 	
 	move_and_slide()
+	
+	## TODO animate butt bone
+	##mixamorig_LeftUpLeg.001
+	#$BikeModel/CharacterModel/Armature/Skeleton3D.find_bone("mixamorig_RightUpLeg.001")
