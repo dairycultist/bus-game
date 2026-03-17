@@ -66,8 +66,8 @@ func _process(delta: float) -> void:
 	
 	# lean based on acceleration
 	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
-	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.z, -abs(turn_speed) * yaw_intensity * speed / max_speed, 1.5 * delta)
-	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, -abs(turn_speed) * roll_intensity * speed / max_speed, 1.5 * delta)
+	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.z, turn_speed * yaw_intensity * abs(speed) / max_speed, 1.5 * delta)
+	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)
 	
 	move_and_slide()
 	
