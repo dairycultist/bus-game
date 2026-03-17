@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dfspaxgwgkgqp"]
 
-[ext_resource type="Material" uid="uid://dmbasmn13dahh" path="res://world/terrain/dirt.tres" id="1_73fnb"]
+[ext_resource type="Material" uid="uid://dmbasmn13dahh" path="res://world/dirt.tres" id="1_73fnb"]
 [ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://car/bike.tscn" id="2_nxogm"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5juve"]
@@ -30,3 +30,8 @@ shape = SubResource("WorldBoundaryShape3D_73fnb")
 
 [node name="Bike" parent="." instance=ExtResource("2_nxogm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11578894, 0)
+max_speed = 40.0
+acceleration = 20.0
+pitch_intensity = 0.07
+roll_intensity = 0.5
+wheel_mesh_radius = 1.2
