@@ -23,6 +23,8 @@ func _input(event):
 		$Camera1.make_current()
 	elif event.as_text() == "2":
 		$Camera2.make_current()
+	elif event.as_text() == "3":
+		$BikeModel/Camera3.make_current()
 
 func _process(delta: float) -> void:
 	
@@ -60,12 +62,12 @@ func _process(delta: float) -> void:
 	# turn
 	turn_speed += move.x * turn_acceleration * delta
 	turn_speed = clamp(turn_speed, -max_turn_speed, max_turn_speed)
-	global_rotation.y += turn_speed * delta
+	global_rotation.y += turn_speed * (speed / max_speed) * delta
 	
 	# lean based on acceleration
 	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
-	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.z, turn_speed * sign(speed) * yaw_intensity, 1.5 * delta)
-	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * sign(speed) * roll_intensity, 1.5 * delta)
+	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.z, -abs(turn_speed) * yaw_intensity * speed / max_speed, 1.5 * delta)
+	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, -abs(turn_speed) * roll_intensity * speed / max_speed, 1.5 * delta)
 	
 	move_and_slide()
 	
