@@ -58,5 +58,4 @@ func _process(delta: float) -> void:
 	$Mesh.rotation.y = lerp_angle($Mesh.rotation.z, turn_speed * yaw_intensity, 1.5 * delta)
 	$Mesh.rotation.z = lerp_angle($Mesh.rotation.z, turn_speed * roll_intensity, 1.5 * delta)
 	
-	print(speed)
 	move_and_slide()

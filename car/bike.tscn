@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=7 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://car/bike.gd" id="1_72ido"]
 [ext_resource type="ArrayMesh" uid="uid://wy54h3reeml3" path="res://car/bikeframe.obj" id="2_ecenp"]
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://car/wheel.obj" id="3_jpe8o"]
+[ext_resource type="PackedScene" uid="uid://dqklu763f300p" path="res://car/mercy_temp/mercy_temp.blend" id="4_u8u2c"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_a7727"]
-radius = 1.2
+radius = 0.9
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a7727"]
-size = Vector3(1, 4.2, 8.666)
+size = Vector3(1, 3.5414062, 6.8733673)
 
 [node name="Bike" type="CharacterBody3D"]
 script = ExtResource("1_72ido")
@@ -24,8 +25,10 @@ transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.554
 mesh = ExtResource("2_ecenp")
 skeleton = NodePath("")
 
+[node name="mercy_temp" parent="Mesh" instance=ExtResource("4_u8u2c")]
+
 [node name="FrontWheelSpring" type="SpringArm3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, -0.4306214, -0.9025327, 0, 0.9025327, -0.4306214, 0, 1.558368, -2.8942413)
+transform = Transform3D(1, 0, 0, 0, -0.4306214, -0.9025327, 0, 0.9025327, -0.4306214, 0, 1.2444587, -1.9527811)
 shape = SubResource("SphereShape3D_a7727")
 spring_length = 3.0
 
@@ -35,15 +38,15 @@ mesh = ExtResource("3_jpe8o")
 skeleton = NodePath("")
 
 [node name="BackWheelSpring" type="SpringArm3D" parent="Mesh"]
-transform = Transform3D(1, 0, 0, 0, 0.06921673, -0.9976016, 0, 0.9976016, 0.06921673, 0, 1.7246858, 3.2851808)
+transform = Transform3D(1, 0, 0, 0, 0.06921673, -0.9976016, 0, 0.9976016, 0.06921673, 0, 1.369581, 2.2887888)
 shape = SubResource("SphereShape3D_a7727")
 spring_length = 3.0
 
 [node name="Mesh" type="MeshInstance3D" parent="Mesh/BackWheelSpring"]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 3.0113753e-08, 0, -0.19943435)
 mesh = ExtResource("3_jpe8o")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7707031, 0.21161413)
 shape = SubResource("BoxShape3D_a7727")
