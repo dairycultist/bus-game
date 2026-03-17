@@ -54,11 +54,6 @@ func _process(delta: float) -> void:
 		if abs(turn_speed) < 0.5:
 			turn_speed = 0.0 # prevent weird float stuff
 	
-	# move wheels based on speed
-	var angular_speed = velocity.dot(-global_basis.z) / wheel_mesh_radius * delta
-	$BikeModel/FrontWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
-	$BikeModel/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
-	
 	# accelerate
 	var accelerate_y = speed
 	
@@ -80,8 +75,13 @@ func _process(delta: float) -> void:
 	
 	move_and_slide()
 	
+	# rotate wheels based on speed
+	var angular_speed = clamp(velocity.dot(-global_basis.z) / wheel_mesh_radius * delta, -0.35, 0.35)
+	$BikeModel/FrontWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
+	$BikeModel/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
+	
 	# animate character leaning when going fast
-	$BikeModel/CharacterModel/AnimationPlayer.seek(clamp(abs(speed / max_speed), 0.0, 0.99))
+	$BikeModel/CharacterModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
 	
 	# animate butt bones
 	var q := Quaternion.from_euler(Vector3(sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0), 0.0, 0.0))
