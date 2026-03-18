@@ -4,4 +4,4 @@ explore the tropical island of Santa Lucía
 
 mercy https://sketchfab.com/3d-models/overwatch-mercycasual-looks-cb8783e97efe455b9ff71246c9ac962d
 
-sky https://godotengine.org/asset-library/asset/579
+sky https://jettelly.com/blog/more-skyboxes-this-time-blue-sky

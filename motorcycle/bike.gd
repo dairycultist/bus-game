@@ -95,7 +95,7 @@ func _process(delta: float) -> void:
 	
 	# animate butt bones
 	var q := Quaternion.from_euler(Vector3(
-		sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0) + 0.4 * abs(speed) / max_speed,
+		sin(Time.get_ticks_msec() * 0.07) * 0.04 * pow(speed / max_speed, 2.0) + 0.4 * abs(speed) / max_speed,
 		0.0,
 		0.0
 	))

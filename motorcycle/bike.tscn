@@ -1,12 +1,18 @@
-[gd_scene load_steps=14 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=16 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://motorcycle/bike.gd" id="1_72ido"]
 [ext_resource type="ArrayMesh" uid="uid://wy54h3reeml3" path="res://motorcycle/bikeframe.obj" id="2_ecenp"]
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://motorcycle/wheel.obj" id="3_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://dqklu763f300p" path="res://motorcycle/mercy_temp/mercy_temp.blend" id="3_kgkd6"]
 [ext_resource type="Material" uid="uid://0eftcyugdws2" path="res://motorcycle/mercy_temp/mercy.tres" id="4_cwgam"]
+[ext_resource type="Shader" uid="uid://bqrwb1q78xafy" path="res://toon.gdshader" id="6_cwgam"]
+[ext_resource type="Texture2D" uid="uid://bfqtpww28lfa3" path="res://motorcycle/shadow.png" id="8_m4ewt"]
 [ext_resource type="Texture2D" uid="uid://df7q5iati2kaj" path="res://motorcycle/wheel_albedo.png" id="8_v5x6j"]
-[ext_resource type="Texture2D" uid="uid://bx1w8bhmwleqx" path="res://motorcycle/wheel_metal.png" id="9_wglmi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cwgam"]
+render_priority = 0
+shader = ExtResource("6_cwgam")
+shader_parameter/shadow = Color(0.66656864, 0.6665688, 0.6665684, 1)
 
 [sub_resource type="Animation" id="Animation_gn852"]
 resource_name = "Lean"
@@ -598,12 +604,11 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_a7727"]
 radius = 0.9
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8jov0"]
-albedo_texture = ExtResource("8_v5x6j")
-metallic = 1.0
-metallic_specular = 0.0
-metallic_texture = ExtResource("9_wglmi")
-roughness = 0.4
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m4ewt"]
+render_priority = 0
+shader = ExtResource("6_cwgam")
+shader_parameter/tex = ExtResource("8_v5x6j")
+shader_parameter/shadow = Color(0.6052743, 0.6052743, 0.6052743, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a7727"]
 size = Vector3(1, 3.5414062, 6.8733673)
@@ -621,14 +626,17 @@ fov = 90.0
 transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -6.8385806, 3.9320517, 1.399806)
 
 [node name="BikeModel" type="MeshInstance3D" parent="."]
+layers = 2
 mesh = ExtResource("2_ecenp")
 skeleton = NodePath("")
+surface_material_override/0 = SubResource("ShaderMaterial_cwgam")
 
 [node name="Camera3" type="Camera3D" parent="BikeModel"]
 transform = Transform3D(-1, 3.5527137e-15, -8.7422784e-08, -4.596675e-08, 0.8506093, 0.5257984, 7.4362625e-08, 0.5257984, -0.8506093, 0, 5.1283507, -2.0579586)
 fov = 80.0
 
 [node name="CharacterModel" parent="BikeModel" instance=ExtResource("3_kgkd6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25026464, 0.8306172)
 
 [node name="Skeleton3D" parent="BikeModel/CharacterModel/Armature" index="0"]
 bones/0/position = Vector3(0.0001646883, 1.3120406, -370.18326)
@@ -695,6 +703,7 @@ bones/41/rotation = Quaternion(4.010508e-08, -9.834184e-08, 8.937059e-08, 1)
 bones/42/position = Vector3(31.127506, -15.575235, 2.012246)
 
 [node name="Mercy" parent="BikeModel/CharacterModel/Armature/Skeleton3D" index="0"]
+layers = 2
 surface_material_override/0 = ExtResource("4_cwgam")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BikeModel"]
@@ -710,9 +719,10 @@ spring_length = 3.0
 
 [node name="Mesh" type="MeshInstance3D" parent="BikeModel/FrontWheelSpring"]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+layers = 2
 mesh = ExtResource("3_jpe8o")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_8jov0")
+surface_material_override/0 = SubResource("ShaderMaterial_m4ewt")
 
 [node name="BackWheelSpring" type="SpringArm3D" parent="BikeModel"]
 transform = Transform3D(1, 0, 0, 0, 0.06921673, -0.9976016, 0, 0.9976016, 0.06921673, 0, 1.369581, 2.2887888)
@@ -721,12 +731,18 @@ spring_length = 3.0
 
 [node name="Mesh" type="MeshInstance3D" parent="BikeModel/BackWheelSpring"]
 transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, 3.0113753e-08, 0, -0.19943435)
+layers = 2
 mesh = ExtResource("3_jpe8o")
 skeleton = NodePath("")
-surface_material_override/0 = SubResource("StandardMaterial3D_8jov0")
+surface_material_override/0 = SubResource("ShaderMaterial_m4ewt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7707031, 0.21161413)
 shape = SubResource("BoxShape3D_a7727")
+
+[node name="Decal" type="Decal" parent="."]
+size = Vector3(8, 2, 8)
+texture_albedo = ExtResource("8_m4ewt")
+cull_mask = 1
 
 [editable path="BikeModel/CharacterModel"]
