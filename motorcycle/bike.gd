@@ -91,7 +91,7 @@ func _process(delta: float) -> void:
 	$BikeModel/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
 	
 	# animate character leaning when going fast
-	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
+	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 1.0))
 	
 	# animate butt bones
 	var q := Quaternion.from_euler(Vector3(
