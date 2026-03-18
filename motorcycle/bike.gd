@@ -166,5 +166,5 @@ func _process(delta: float) -> void:
 	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)
 	
 	# engine noise
-	$EngineAudio.pitch_scale = 0.99 + abs(speed / max_speed)
+	$EngineAudio.pitch_scale = 0.99 + pow(abs(speed / max_speed), 2.0)
 	pitch_effect.pitch_scale = 1.0 / $EngineAudio.pitch_scale # invert the pitch scale to maintain pitch
