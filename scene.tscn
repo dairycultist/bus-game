@@ -30,3 +30,5 @@ shape = SubResource("WorldBoundaryShape3D_73fnb")
 
 [node name="Bike" parent="." instance=ExtResource("2_nxogm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11578894, 0)
+wobble_intensity = 3.0
+wobble_stiffness = 30.0

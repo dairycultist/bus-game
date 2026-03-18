@@ -17,6 +17,10 @@ var turn_speed: float
 @export var roll_intensity: float = 0.5
 @export var wheel_mesh_radius: float = 1.2
 
+@export_category("Boobs")
+@export var wobble_intensity: float = 1.0
+@export var wobble_stiffness: float = 16.0
+
 @onready var skeleton: Skeleton3D = $BikeModel/CharacterModel/Armature/Skeleton3D
 
 @onready var butt_l = skeleton.find_bone("LeftButt")
@@ -95,11 +99,11 @@ func _process(delta: float) -> void:
 	skeleton.set_bone_pose_rotation(butt_r, butt_r_baserot * q)
 	
 	# animate boobs with spring physics
-	boobs_rotvel.x += turn_speed * abs(speed / max_speed) * delta
-	boobs_rotvel.y -= accelerate_y * delta
+	boobs_rotvel.x += wobble_intensity * turn_speed * abs(speed / max_speed) * delta
+	boobs_rotvel.y -= wobble_intensity * accelerate_y * delta
 	
 	boobs_rot += boobs_rotvel * delta
-	boobs_rotvel -= boobs_rot * 16.0 * delta
+	boobs_rotvel -= boobs_rot * wobble_stiffness * delta
 	boobs_rotvel *= 0.98
 	
 	skeleton.set_bone_pose_rotation(boobs, Quaternion.from_euler(Vector3(boobs_rot.y, 0.0, 0.0)) * Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) * boobs_baserot)
