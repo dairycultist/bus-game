@@ -50,19 +50,19 @@ func _process(delta: float) -> void:
 	var move := -Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if move.y == 0.0:
-		
-		move.y = -sign(speed)
 	
 		if abs(speed) < 0.5:
 			move.x = 0.0 # can't turn if not moving
 			speed = 0.0  # prevent weird float stuff
+		else:
+			move.y = -sign(speed)
 	
 	if move.x == 0.0:
 		
-		move.x = -sign(turn_speed)
-		
 		if abs(turn_speed) < 1.0:
 			turn_speed = 0.0 # prevent weird float stuff
+		else:
+			move.x = -sign(turn_speed)
 	
 	# accelerate
 	var accelerate_y = speed
@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 	# turn
 	turn_speed += move.x * turn_acceleration * delta
 	turn_speed = clamp(turn_speed, -max_turn_speed, max_turn_speed)
-	global_rotation.y += turn_speed * (speed / max_speed) * delta
+	global_rotation.y += turn_speed * speed / max_speed * delta
 	
 	# lean based on acceleration
 	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
@@ -94,12 +94,16 @@ func _process(delta: float) -> void:
 	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
 	
 	# animate butt bones
-	var q := Quaternion.from_euler(Vector3(sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0) + 0.4 * speed / max_speed, 0.0, 0.0))
+	var q := Quaternion.from_euler(Vector3(
+		sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0) + 0.4 * abs(speed) / max_speed,
+		0.0,
+		0.0
+	))
 	skeleton.set_bone_pose_rotation(butt_l, butt_l_baserot * q)
 	skeleton.set_bone_pose_rotation(butt_r, butt_r_baserot * q)
 	
 	# animate boobs with spring physics
-	boobs_rotvel.x += wobble_intensity * turn_speed * abs(speed / max_speed) * delta
+	boobs_rotvel.x += wobble_intensity * turn_speed * abs(speed) / max_speed * delta
 	boobs_rotvel.y -= wobble_intensity * accelerate_y * delta
 	
 	boobs_rot += boobs_rotvel * delta
