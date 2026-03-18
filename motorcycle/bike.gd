@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
 	
 	# animate butt bones
-	var q := Quaternion.from_euler(Vector3(sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0), 0.0, 0.0))
+	var q := Quaternion.from_euler(Vector3(sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0) + 0.45 * speed / max_speed, 0.0, 0.0))
 	skeleton.set_bone_pose_rotation(butt_l, butt_l_baserot * q)
 	skeleton.set_bone_pose_rotation(butt_r, butt_r_baserot * q)
 	
@@ -106,4 +106,9 @@ func _process(delta: float) -> void:
 	boobs_rotvel -= boobs_rot * wobble_stiffness * delta
 	boobs_rotvel *= 0.98
 	
-	skeleton.set_bone_pose_rotation(boobs, Quaternion.from_euler(Vector3(boobs_rot.y, 0.0, 0.0)) * Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) * boobs_baserot)
+	skeleton.set_bone_pose_rotation(
+		boobs,
+		Quaternion.from_euler(Vector3(boobs_rot.y, 0.0, 0.0)) *
+		Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) *
+		boobs_baserot
+	)
