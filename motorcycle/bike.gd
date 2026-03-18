@@ -18,13 +18,13 @@ var turn_speed: float
 @export var wheel_mesh_radius: float = 1.2
 
 @onready var skeleton: Skeleton3D = $BikeModel/CharacterModel/Armature/Skeleton3D
-@onready var butt_l = skeleton.find_bone("mixamorig_LeftUpLeg.001")
-@onready var butt_r = skeleton.find_bone("mixamorig_RightUpLeg.001")
+@onready var butt_l = skeleton.find_bone("LeftButt")
+@onready var butt_r = skeleton.find_bone("RightButt")
 @onready var butt_l_baserot = skeleton.get_bone_pose_rotation(butt_l)
 @onready var butt_r_baserot = skeleton.get_bone_pose_rotation(butt_r)
 
 func _ready() -> void:
-	$BikeModel/CharacterModel/AnimationPlayer.play("Lean")
+	$BikeModel/AnimationPlayer.play("Lean")
 
 func _input(event):
 	
@@ -81,7 +81,7 @@ func _process(delta: float) -> void:
 	$BikeModel/BackWheelSpring/Mesh.rotate_object_local(Vector3.RIGHT, angular_speed)
 	
 	# animate character leaning when going fast
-	$BikeModel/CharacterModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
+	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 0.99))
 	
 	# animate butt bones
 	var q := Quaternion.from_euler(Vector3(sin(Time.get_ticks_msec() * 0.07) * 0.07 * pow(speed / max_speed, 2.0), 0.0, 0.0))
