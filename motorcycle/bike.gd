@@ -79,11 +79,6 @@ func _process(delta: float) -> void:
 	turn_speed = clamp(turn_speed, -max_turn_speed, max_turn_speed)
 	global_rotation.y += turn_speed * speed / max_speed * delta
 	
-	# lean based on acceleration
-	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
-	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.y, turn_speed * yaw_intensity * speed / max_speed, 1.5 * delta)
-	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)
-	
 	# gravity
 	velocity += get_gravity() * delta
 	
@@ -122,11 +117,44 @@ func _process(delta: float) -> void:
 	)
 	
 	# orient bike with ground
-	var front_result = get_world_3d().direct_space_state.intersect_ray(
-		PhysicsRayQueryParameters3D.create(
-			$BikeModel/FrontWheelSpring.global_position,
-			$BikeModel/FrontWheelSpring.global_position + $BikeModel/FrontWheelSpring.global_basis.z * $BikeModel/FrontWheelSpring.spring_length
-		)
+	var front_query = PhysicsRayQueryParameters3D.create(
+		$BikeModel/FrontWheelSpring.global_position,
+		$BikeModel/FrontWheelSpring.global_position + $BikeModel/FrontWheelSpring.global_basis.z * $BikeModel/FrontWheelSpring.spring_length
 	)
+	front_query.collision_mask = 1
+	var front_result = get_world_3d().direct_space_state.intersect_ray(front_query)
 	
-	print(front_result)
+	var mid_query = PhysicsRayQueryParameters3D.create(
+		$BikeModel.global_position + Vector3(0.0,  1.0, 0.0),
+		$BikeModel.global_position + Vector3(0.0, -5.0, 0.0)
+	)
+	mid_query.collision_mask = 1
+	var mid_result = get_world_3d().direct_space_state.intersect_ray(mid_query)
+	
+	var back_query = PhysicsRayQueryParameters3D.create(
+		$BikeModel/BackWheelSpring.global_position,
+		$BikeModel/BackWheelSpring.global_position + $BikeModel/BackWheelSpring.global_basis.z * $BikeModel/BackWheelSpring.spring_length
+	)
+	back_query.collision_mask = 1
+	var back_result = get_world_3d().direct_space_state.intersect_ray(back_query)
+	
+	var orient_angle := 0.0
+	var div := 0
+	
+	if front_result.has("normal"):
+		orient_angle += front_result.normal.dot(global_basis.z)
+		div += 1
+	if mid_result.has("normal"):
+		orient_angle += mid_result.normal.dot(global_basis.z) * 2
+		div += 2
+	if back_result.has("normal"):
+		orient_angle += back_result.normal.dot(global_basis.z)
+		div += 1
+	
+	if div != 0:
+		orient_angle /= div
+	
+	# lean based on acceleration
+	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, orient_angle + accelerate_y * pitch_intensity, 3.0 * delta)
+	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.y, turn_speed * yaw_intensity * speed / max_speed, 1.5 * delta)
+	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)

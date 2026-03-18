@@ -1,5 +1,4 @@
 shader_type spatial;
-
 render_mode unshaded;
 
 uniform float slide_speed = 0.05;
@@ -15,7 +14,7 @@ void vertex() {
 
 void fragment() {
 	
-	vec3 pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz * 0.1;
+	vec3 pos = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz * 0.05;
 
 	ALBEDO = texture(
 		water,
