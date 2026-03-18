@@ -12,7 +12,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwgam"]
 render_priority = 0
 shader = ExtResource("6_cwgam")
-shader_parameter/shadow = Color(0.66656864, 0.6665688, 0.6665684, 1)
 
 [sub_resource type="Animation" id="Animation_gn852"]
 resource_name = "Lean"
@@ -608,7 +607,6 @@ radius = 0.9
 render_priority = 0
 shader = ExtResource("6_cwgam")
 shader_parameter/tex = ExtResource("8_v5x6j")
-shader_parameter/shadow = Color(0.6052743, 0.6052743, 0.6052743, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a7727"]
 size = Vector3(1, 3.5414062, 6.8733673)

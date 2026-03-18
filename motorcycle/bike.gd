@@ -69,7 +69,8 @@ func _process(delta: float) -> void:
 	
 	speed += move.y * acceleration * delta
 	speed = clamp(speed, -max_speed, max_speed)
-	velocity = -global_basis.z * speed
+	velocity.x = -global_basis.z.x * speed
+	velocity.z = -global_basis.z.z * speed
 	
 	accelerate_y = -sign(accelerate_y - speed)
 	
@@ -82,6 +83,9 @@ func _process(delta: float) -> void:
 	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, accelerate_y * pitch_intensity, 3.0 * delta)
 	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.y, turn_speed * yaw_intensity * speed / max_speed, 1.5 * delta)
 	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)
+	
+	# gravity
+	velocity += get_gravity() * delta
 	
 	move_and_slide()
 	
@@ -116,3 +120,13 @@ func _process(delta: float) -> void:
 		Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) *
 		boobs_baserot
 	)
+	
+	# orient bike with ground
+	var front_result = get_world_3d().direct_space_state.intersect_ray(
+		PhysicsRayQueryParameters3D.create(
+			$BikeModel/FrontWheelSpring.global_position,
+			$BikeModel/FrontWheelSpring.global_position + $BikeModel/FrontWheelSpring.global_basis.z * $BikeModel/FrontWheelSpring.spring_length
+		)
+	)
+	
+	print(front_result)

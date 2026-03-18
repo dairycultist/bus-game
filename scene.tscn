@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=15 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Material" uid="uid://dmbasmn13dahh" path="res://world/dirt.tres" id="1_73fnb"]
 [ext_resource type="Texture2D" uid="uid://dvauqb7lm11xd" path="res://world/panorama_image.png" id="1_3253y"]
 [ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://motorcycle/bike.tscn" id="2_nxogm"]
+[ext_resource type="Shader" uid="uid://c65ex7koh6ljy" path="res://world/water/water.gdshader" id="3_u3cyc"]
+[ext_resource type="Texture2D" uid="uid://cx2p7uab14ujp" path="res://world/water/water.jpg" id="4_m7jmp"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u3cyc"]
 panorama = ExtResource("1_3253y")
@@ -32,16 +34,22 @@ height = 20.0
 [sub_resource type="SphereShape3D" id="SphereShape3D_u3cyc"]
 radius = 10.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m7jmp"]
+render_priority = 0
+shader = ExtResource("3_u3cyc")
+shader_parameter/slide_speed = 0.05
+shader_parameter/wobble_speed = 0.5
+shader_parameter/wobble_intensity = 0.05
+shader_parameter/shuffle_intensity = 1.0
+shader_parameter/water = ExtResource("4_m7jmp")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_y2354"]
+size = Vector2(1000, 1000)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_y2354")
-
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.98326164, -0.0013009408, 0.18219428, -0.17550944, -0.2752379, 0.94522, 0.048917096, -0.96137536, -0.2708592, 0, 0, 0)
-light_energy = 1.157
-shadow_opacity = 0.6
-shadow_blur = 2.113
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
@@ -59,6 +67,11 @@ mesh = SubResource("SphereMesh_3253y")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.139022, 35.358433)
 shape = SubResource("SphereShape3D_u3cyc")
+
+[node name="Water" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0)
+material_override = SubResource("ShaderMaterial_m7jmp")
+mesh = SubResource("PlaneMesh_y2354")
 
 [node name="Bike" parent="." instance=ExtResource("2_nxogm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11578894, 0)
