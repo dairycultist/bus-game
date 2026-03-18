@@ -51,7 +51,7 @@ func _process(delta: float) -> void:
 	
 	if move.y == 0.0:
 	
-		if abs(speed) < 0.5:
+		if abs(speed) < max_speed * 0.1:
 			move.x = 0.0 # can't turn if not moving
 			speed = 0.0  # prevent weird float stuff
 		else:
@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 	
 	if move.x == 0.0:
 		
-		if abs(turn_speed) < 1.0:
+		if abs(turn_speed) < max_turn_speed * 0.1:
 			turn_speed = 0.0 # prevent weird float stuff
 		else:
 			move.x = -sign(turn_speed)
