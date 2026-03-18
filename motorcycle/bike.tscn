@@ -612,11 +612,12 @@ collision_layer = 2
 script = ExtResource("1_72ido")
 
 [node name="Camera1" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9848078, 0.1736482, 0, -0.1736482, 0.9848078, 0, 5.486, 14.427)
+transform = Transform3D(1, 0, 0, 0, 0.9848078, 0.1736482, 0, -0.1736482, 0.9848078, 0, 5.343987, 6.4677973)
 current = true
+fov = 90.0
 
 [node name="Camera2" type="Camera3D" parent="."]
-transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -13.411793, 3.6758423, 5.7761383)
+transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -6.8385806, 3.9320517, 1.399806)
 
 [node name="BikeModel" type="MeshInstance3D" parent="."]
 mesh = ExtResource("2_ecenp")

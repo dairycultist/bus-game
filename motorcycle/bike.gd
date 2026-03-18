@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 		
 		move.x = -sign(turn_speed)
 		
-		if abs(turn_speed) < 0.5:
+		if abs(turn_speed) < 1.0:
 			turn_speed = 0.0 # prevent weird float stuff
 	
 	# accelerate

@@ -1,7 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=9 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Material" uid="uid://dmbasmn13dahh" path="res://world/dirt.tres" id="1_73fnb"]
+[ext_resource type="Texture2D" uid="uid://dea2tic0rjd71" path="res://world/Epic_BlueSunset_EquiRect_flat.png" id="1_3253y"]
 [ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://motorcycle/bike.tscn" id="2_nxogm"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u3cyc"]
+panorama = ExtResource("1_3253y")
+
+[sub_resource type="Sky" id="Sky_m7jmp"]
+sky_material = SubResource("PanoramaSkyMaterial_u3cyc")
+
+[sub_resource type="Environment" id="Environment_y2354"]
+background_mode = 2
+sky = SubResource("Sky_m7jmp")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5juve"]
 size = Vector2(500, 500)
@@ -12,8 +23,11 @@ subdivide_depth = 100
 
 [node name="Node3D" type="Node3D"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y2354")
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.338949, -0.813416, 0.472724, 0.134446, 0.53919, 0.831384, -0.931149, -0.218241, 0.292118, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.9804227, 0.19690451, 0, -0.19690451, 0.9804227, 0, 0, 0)
 light_energy = 1.5
 shadow_enabled = true
 shadow_opacity = 0.6
@@ -30,5 +44,5 @@ shape = SubResource("WorldBoundaryShape3D_73fnb")
 
 [node name="Bike" parent="." instance=ExtResource("2_nxogm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11578894, 0)
-wobble_intensity = 3.0
-wobble_stiffness = 30.0
+wobble_intensity = 2.0
+wobble_stiffness = 40.0
