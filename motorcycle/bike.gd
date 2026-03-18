@@ -33,8 +33,14 @@ var turn_speed: float
 var boobs_rot: Vector2
 var boobs_rotvel: Vector2
 
+var pitch_effect: AudioEffectPitchShift
+
 func _ready() -> void:
+	
 	$BikeModel/AnimationPlayer.play("Lean")
+	
+	pitch_effect = AudioServer.get_bus_effect(AudioServer.get_bus_index("Engine"), 0)
+	$EngineAudio.play()
 
 func _input(event):
 	
@@ -51,7 +57,7 @@ func _process(delta: float) -> void:
 	
 	if move.y == 0.0:
 	
-		if abs(speed) < max_speed * 0.1:
+		if abs(speed) < max_speed * delta:
 			move.x = 0.0 # can't turn if not moving
 			speed = 0.0  # prevent weird float stuff
 		else:
@@ -59,7 +65,7 @@ func _process(delta: float) -> void:
 	
 	if move.x == 0.0:
 		
-		if abs(turn_speed) < max_turn_speed * 0.1:
+		if abs(turn_speed) < max_turn_speed * delta:
 			turn_speed = 0.0 # prevent weird float stuff
 		else:
 			move.x = -sign(turn_speed)
@@ -158,3 +164,7 @@ func _process(delta: float) -> void:
 	$BikeModel.rotation.x = lerp_angle($BikeModel.rotation.x, orient_angle + accelerate_y * pitch_intensity, 3.0 * delta)
 	$BikeModel.rotation.y = lerp_angle($BikeModel.rotation.y, turn_speed * yaw_intensity * speed / max_speed, 1.5 * delta)
 	$BikeModel.rotation.z = lerp_angle($BikeModel.rotation.z, turn_speed * roll_intensity * abs(speed) / max_speed, 1.5 * delta)
+	
+	# engine noise
+	$EngineAudio.pitch_scale = 0.99 + abs(speed / max_speed)
+	pitch_effect.pitch_scale = 1.0 / $EngineAudio.pitch_scale # invert the pitch scale to maintain pitch

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=17 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://motorcycle/bike.gd" id="1_72ido"]
 [ext_resource type="ArrayMesh" uid="uid://wy54h3reeml3" path="res://motorcycle/bikeframe.obj" id="2_ecenp"]
@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://bqrwb1q78xafy" path="res://toon.gdshader" id="6_cwgam"]
 [ext_resource type="Texture2D" uid="uid://bfqtpww28lfa3" path="res://motorcycle/shadow.png" id="8_m4ewt"]
 [ext_resource type="Texture2D" uid="uid://df7q5iati2kaj" path="res://motorcycle/wheel_albedo.png" id="8_v5x6j"]
+[ext_resource type="AudioStream" uid="uid://bx2j1fdmasup8" path="res://motorcycle/engine.wav" id="9_gn852"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cwgam"]
 render_priority = 0
@@ -736,10 +737,16 @@ surface_material_override/0 = SubResource("ShaderMaterial_m4ewt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7707031, 0.21781683)
 shape = SubResource("BoxShape3D_a7727")
 
-[node name="Decal" type="Decal" parent="."]
+[node name="ShadowDecal" type="Decal" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 size = Vector3(8, 3, 8)
 texture_albedo = ExtResource("8_m4ewt")
 cull_mask = 1
+
+[node name="EngineAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.998457, 0)
+stream = ExtResource("9_gn852")
+pitch_scale = 2.0
+bus = &"Engine"
 
 [editable path="BikeModel/CharacterModel"]
