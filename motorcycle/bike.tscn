@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dqs6dsg0ph3d"]
+[gd_scene load_steps=14 format=3 uid="uid://dqs6dsg0ph3d"]
 
 [ext_resource type="Script" uid="uid://cnr18duawcafv" path="res://motorcycle/bike.gd" id="1_72ido"]
 [ext_resource type="ArrayMesh" uid="uid://wy54h3reeml3" path="res://motorcycle/bikeframe.obj" id="2_ecenp"]
 [ext_resource type="ArrayMesh" uid="uid://buk5qdy70xjwm" path="res://motorcycle/wheel.obj" id="3_jpe8o"]
 [ext_resource type="PackedScene" uid="uid://dqklu763f300p" path="res://motorcycle/mercy_temp/mercy_temp.blend" id="3_kgkd6"]
+[ext_resource type="Material" uid="uid://0eftcyugdws2" path="res://motorcycle/mercy_temp/mercy.tres" id="4_cwgam"]
 [ext_resource type="Texture2D" uid="uid://df7q5iati2kaj" path="res://motorcycle/wheel_albedo.png" id="8_v5x6j"]
 [ext_resource type="Texture2D" uid="uid://bx1w8bhmwleqx" path="res://motorcycle/wheel_metal.png" id="9_wglmi"]
 
@@ -630,7 +631,7 @@ fov = 80.0
 [node name="CharacterModel" parent="BikeModel" instance=ExtResource("3_kgkd6")]
 
 [node name="Skeleton3D" parent="BikeModel/CharacterModel/Armature" index="0"]
-bones/0/position = Vector3(0.0001646883, 83.72153, -346.6009)
+bones/0/position = Vector3(0.0001646883, 1.3120406, -370.18326)
 bones/0/rotation = Quaternion(-2.1738995e-06, -0.7071068, 0.7071068, -2.0910736e-06)
 bones/4/position = Vector3(3.7223994e-15, 42.338932, -2.0192037e-05)
 bones/4/scale = Vector3(1, 0.9999999, 0.99999994)
@@ -645,7 +646,7 @@ bones/10/position = Vector3(2.6866558e-06, 93.10111, -2.95602e-05)
 bones/10/rotation = Quaternion(-0.00055574125, 0.065815285, 3.6604237e-05, 0.9978317)
 bones/11/rotation = Quaternion(0.21747163, 0.08802322, 0.2104469, 0.9490364)
 bones/11/scale = Vector3(1.0000001, 1, 0.9999999)
-bones/12/position = Vector3(-1.0749303, 11.885852, 1.565458e-05)
+bones/12/position = Vector3(-1.0749291, 11.885857, 1.0118842e-05)
 bones/12/rotation = Quaternion(5.49903e-05, -0.0014085948, 0.051430847, 0.9986756)
 bones/12/scale = Vector3(0.9999999, 1.0000001, 0.99999994)
 bones/13/rotation = Quaternion(-0.0003292966, -0.0049865856, 0.053311985, 0.99856544)
@@ -663,9 +664,9 @@ bones/20/rotation = Quaternion(-0.114482366, 0.0023200563, -0.015834555, 0.99329
 bones/21/rotation = Quaternion(2.8652556e-07, 0.009151473, 2.3824393e-07, 0.99995816)
 bones/22/position = Vector3(-3.371682e-06, 93.11661, -2.2787182e-05)
 bones/22/rotation = Quaternion(-0.0006173373, -0.048706964, -2.9793937e-05, 0.9988129)
-bones/23/position = Vector3(9.031107, 11.163902, 3.5991971)
+bones/23/position = Vector3(9.031103, 11.163904, 3.5991971)
 bones/23/rotation = Quaternion(0.2259916, -0.09031106, -0.2121, 0.94645935)
-bones/24/position = Vector3(0.8509425, 11.812327, 8.491416e-05)
+bones/24/position = Vector3(0.8509338, 11.812338, 7.7153214e-05)
 bones/24/rotation = Quaternion(1.0107e-05, 0.00052286504, -0.05347062, 0.9985693)
 bones/24/scale = Vector3(0.9999998, 0.9999998, 0.99999976)
 bones/25/position = Vector3(-0.35690403, 10.169284, -4.661516e-05)
@@ -692,6 +693,9 @@ bones/39/rotation = Quaternion(-0.02629168, 0.86467755, -0.501073, -0.023818715)
 bones/40/rotation = Quaternion(0.26544258, 0.030006865, -0.008265813, 0.9636242)
 bones/41/rotation = Quaternion(4.010508e-08, -9.834184e-08, 8.937059e-08, 1)
 bones/42/position = Vector3(31.127506, -15.575235, 2.012246)
+
+[node name="Mercy" parent="BikeModel/CharacterModel/Armature/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("4_cwgam")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BikeModel"]
 libraries = {
