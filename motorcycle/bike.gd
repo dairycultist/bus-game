@@ -21,17 +21,17 @@ var turn_speed: float
 @export var wobble_intensity: float = 1.0
 @export var wobble_stiffness: float = 16.0
 
-@onready var skeleton: Skeleton3D = $BikeModel/CharacterModel/Armature/Skeleton3D
+#@onready var skeleton: Skeleton3D = $BikeModel/CharacterModel/Armature/Skeleton3D
+#
+#@onready var butt_l = skeleton.find_bone("LeftButt")
+#@onready var butt_r = skeleton.find_bone("RightButt")
+#@onready var butt_l_baserot = skeleton.get_bone_pose_rotation(butt_l)
+#@onready var butt_r_baserot = skeleton.get_bone_pose_rotation(butt_r)
 
-@onready var butt_l = skeleton.find_bone("LeftButt")
-@onready var butt_r = skeleton.find_bone("RightButt")
-@onready var butt_l_baserot = skeleton.get_bone_pose_rotation(butt_l)
-@onready var butt_r_baserot = skeleton.get_bone_pose_rotation(butt_r)
-
-@onready var boobs = skeleton.find_bone("Boobs")
-@onready var boobs_baserot = skeleton.get_bone_pose_rotation(boobs)
-var boobs_rot: Vector2
-var boobs_rotvel: Vector2
+#@onready var boobs = skeleton.find_bone("Boobs")
+#@onready var boobs_baserot = skeleton.get_bone_pose_rotation(boobs)
+#var boobs_rot: Vector2
+#var boobs_rotvel: Vector2
 
 var pitch_effect: AudioEffectPitchShift
 
@@ -98,29 +98,29 @@ func _process(delta: float) -> void:
 	# animate character leaning when going fast
 	$BikeModel/AnimationPlayer.seek(clamp(pow(abs(speed / max_speed), 2.0), 0.0, 1.0))
 	
-	# animate butt bones
-	var q := Quaternion.from_euler(Vector3(
-		sin(Time.get_ticks_msec() * 0.07) * 0.04 * pow(speed / max_speed, 2.0) + 0.4 * abs(speed) / max_speed,
-		0.0,
-		0.0
-	))
-	skeleton.set_bone_pose_rotation(butt_l, butt_l_baserot * q)
-	skeleton.set_bone_pose_rotation(butt_r, butt_r_baserot * q)
-	
-	# animate boobs with spring physics
-	boobs_rotvel.x += wobble_intensity * turn_speed * abs(speed) / max_speed * delta
-	boobs_rotvel.y -= wobble_intensity * accelerate_y * delta
-	
-	boobs_rot += boobs_rotvel * delta
-	boobs_rotvel -= boobs_rot * wobble_stiffness * delta
-	boobs_rotvel *= 0.98
-	
-	skeleton.set_bone_pose_rotation(
-		boobs,
-		Quaternion.from_euler(Vector3(boobs_rot.y, 0.0, 0.0)) *
-		Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) *
-		boobs_baserot
-	)
+	## animate butt bones
+	#var q := Quaternion.from_euler(Vector3(
+		#sin(Time.get_ticks_msec() * 0.07) * 0.04 * pow(speed / max_speed, 2.0) + 0.4 * abs(speed) / max_speed,
+		#0.0,
+		#0.0
+	#))
+	#skeleton.set_bone_pose_rotation(butt_l, butt_l_baserot * q)
+	#skeleton.set_bone_pose_rotation(butt_r, butt_r_baserot * q)
+	#
+	## animate boobs with spring physics
+	#boobs_rotvel.x += wobble_intensity * turn_speed * abs(speed) / max_speed * delta
+	#boobs_rotvel.y -= wobble_intensity * accelerate_y * delta
+	#
+	#boobs_rot += boobs_rotvel * delta
+	#boobs_rotvel -= boobs_rot * wobble_stiffness * delta
+	#boobs_rotvel *= 0.98
+	#
+	#skeleton.set_bone_pose_rotation(
+		#boobs,
+		#Quaternion.from_euler(Vector3(boobs_rot.y, 0.0, 0.0)) *
+		#Quaternion.from_euler(Vector3(0.0, boobs_rot.x, 0.0)) *
+		#boobs_baserot
+	#)
 	
 	# orient bike with ground
 	var front_query = PhysicsRayQueryParameters3D.create(
