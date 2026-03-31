@@ -1,10 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfspaxgwgkgqp"]
+[gd_scene load_steps=19 format=3 uid="uid://dfspaxgwgkgqp"]
 
 [ext_resource type="Texture2D" uid="uid://dvauqb7lm11xd" path="res://world/panorama_image.png" id="1_3253y"]
 [ext_resource type="PackedScene" uid="uid://c68f5jmq4raxg" path="res://world/terrain.blend" id="2_m7jmp"]
 [ext_resource type="PackedScene" uid="uid://dqs6dsg0ph3d" path="res://motorcycle/bike.tscn" id="2_nxogm"]
 [ext_resource type="Shader" uid="uid://c65ex7koh6ljy" path="res://world/water/water.gdshader" id="3_u3cyc"]
 [ext_resource type="Texture2D" uid="uid://cx2p7uab14ujp" path="res://world/water/water.jpg" id="4_m7jmp"]
+[ext_resource type="ArrayMesh" uid="uid://dwpnso46v27ng" path="res://world/gantry_arch.obj" id="6_y2354"]
+[ext_resource type="Shader" uid="uid://bqrwb1q78xafy" path="res://toon.gdshader" id="7_xlvrw"]
+[ext_resource type="Texture2D" uid="uid://dke7gqbc8vlgl" path="res://world/santa_lucia_arch.png" id="8_73fnb"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_u3cyc"]
 panorama = ExtResource("1_3253y")
@@ -46,6 +49,11 @@ shader_parameter/water = ExtResource("4_m7jmp")
 [sub_resource type="PlaneMesh" id="PlaneMesh_y2354"]
 size = Vector2(1000, 1000)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5juve"]
+render_priority = 0
+shader = ExtResource("7_xlvrw")
+shader_parameter/tex = ExtResource("8_73fnb")
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -78,5 +86,16 @@ floor_max_angle = 1.3159783
 floor_snap_length = 0.39
 wobble_intensity = 2.0
 wobble_stiffness = 40.0
+
+[node name="GantryArch" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.98017794, 0, -0.19811927, 0, 1, 0, 0.19811927, 0, 0.98017794, 4.66979, -3.7547543, -65.637535)
+mesh = ExtResource("6_y2354")
+surface_material_override/0 = SubResource("ShaderMaterial_5juve")
+
+[node name="GantryArch2" type="MeshInstance3D" parent="GantryArch"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = ExtResource("6_y2354")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_5juve")
 
 [editable path="Floor/terrain"]

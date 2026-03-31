@@ -50,7 +50,7 @@ fov = 90.0
 transform = Transform3D(0.5541908, 0, -0.83238965, 0, 1, 0, 0.83238965, 0, 0.5541908, -6.8385806, 3.9320517, 1.399806)
 
 [node name="BikeModel" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.19106853, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5017066, 0)
 layers = 2
 mesh = ExtResource("2_ecenp")
 skeleton = NodePath("")
@@ -70,7 +70,7 @@ libraries = {
 speed_scale = 0.0
 
 [node name="FrontWheelSpring" type="SpringArm3D" parent="BikeModel"]
-transform = Transform3D(1, 0, 0, 0, -0.4306214, -0.9025327, 0, 0.9025327, -0.4306214, 0, 1.3992938, -1.5666641)
+transform = Transform3D(1, 0, 0, 0, -0.4306214, -0.9025327, 0, 0.9025327, -0.4306214, 0, 1.6686801, -1.438133)
 shape = SubResource("SphereShape3D_a7727")
 
 [node name="Mesh" type="MeshInstance3D" parent="BikeModel/FrontWheelSpring"]
@@ -81,7 +81,7 @@ skeleton = NodePath("")
 surface_material_override/0 = SubResource("ShaderMaterial_m4ewt")
 
 [node name="BackWheelSpring" type="SpringArm3D" parent="BikeModel"]
-transform = Transform3D(1, 0, 0, 0, 0.04281728, -0.99908286, 0, 0.99908286, 0.04281728, 0, 1.3915694, 1.780201)
+transform = Transform3D(1, 0, 0, 0, 0.04281728, -0.99908286, 0, 0.99908286, 0.04281728, 0, 1.6772857, 1.7679561)
 shape = SubResource("SphereShape3D_a7727")
 
 [node name="Mesh" type="MeshInstance3D" parent="BikeModel/BackWheelSpring"]

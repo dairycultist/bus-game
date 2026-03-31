@@ -1,7 +1,7 @@
 A car sandbox game cuz I don't have internet
 
-explore the tropical island of Santa Lucía
+explore the (fictional) Italian island of Santa Lucia
 
-mercy https://sketchfab.com/3d-models/overwatch-mercycasual-looks-cb8783e97efe455b9ff71246c9ac962d
+open-world arcade-style racing game
 
 sky https://jettelly.com/blog/more-skyboxes-this-time-blue-sky
